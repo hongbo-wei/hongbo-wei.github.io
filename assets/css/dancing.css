@@ -542,12 +542,12 @@ body {
 
 .lang-switch {
     margin-top: 1rem;
-    padding: 6px 18px;
+    padding: 4px 12px;
     background: #fff;
     color: #1a1a1a;
     border: 1px solid #1a1a1a;
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
     font-family: 'Inter', sans-serif;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
