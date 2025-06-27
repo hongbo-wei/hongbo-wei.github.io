@@ -17,12 +17,56 @@
         
         <main class="main-content">
             <div class="dancer-container">
+                <!-- Vinyl Player UI -->
+                <div class="vinyl-player" id="vinylPlayer">
+                    <div class="vinyl-container">
+                        <div class="vinyl-record" id="vinylRecord">
+                            <div class="vinyl-center">
+                                <div class="vinyl-hole"></div>
+                                <div class="vinyl-label">
+                                    <div class="song-title">O Children</div>
+                                    <div class="artist-name">Nick Cave & The Bad Seeds</div>
+                                </div>
+                            </div>
+                            <div class="vinyl-grooves"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm"></div>
+                    </div>
+                    
+                    <div class="player-controls">
+                        <div class="song-info">
+                            <h3 class="current-song">O Children</h3>
+                            <p class="current-artist">Nick Cave & The Bad Seeds</p>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <span class="time-current" id="currentTime">0:00</span>
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                                <div class="progress-handle" id="progressHandle"></div>
+                            </div>
+                            <span class="time-total" id="totalTime">0:00</span>
+                        </div>
+                        
+                        <div class="control-buttons">
+                            <button class="player-btn" id="prevBtn">⏮</button>
+                            <button class="player-btn play-pause" id="playerPlayBtn">▶</button>
+                            <button class="player-btn" id="nextBtn">⏭</button>
+                            <button class="player-btn volume-btn" id="volumeBtn">🔊</button>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Dancer SVG silhouette -->
                 <div class="dancer-svg-container">
                     <img src="assets/img/dancing/her.svg" alt="Dancing silhouette" class="dancer-svg" width="320" height="375">
+                    <div class="dance-floor"></div>
                 </div>
-                <div class="music-bricks" id="musicBricks"></div>
-                <div class="dance-floor"></div>
+                
+                <!-- Music visualization -->
+                <div class="music-visualization">
+                    <div class="music-bricks" id="musicBricks"></div>
+                </div>
             </div>
             
             <div class="controls">
