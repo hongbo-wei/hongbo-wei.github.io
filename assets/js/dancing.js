@@ -52,7 +52,7 @@ class JazzDancer {
                 reset: '重置',
                 quote: '“舞蹈是灵魂的隐秘语言。”',
                 author: '- 玛莎·格雷厄姆',
-                footer: '为那个因舞蹈而感到生命的你倾情制作',
+                footer: '为那个因舞蹈而感到活着的你倾情制作',
                 langBtn: 'EN',
                 musicMsg: '🎵 音乐响起... 感受节奏！',
                 musicPaused: '音乐已暂停',
