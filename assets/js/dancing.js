@@ -8,6 +8,28 @@ class JazzDancer {
         this.musicBricks = document.getElementById('musicBricks');
         this.langSwitch = document.getElementById('langSwitch');
         this.currentLang = 'en';
+        
+        // Vinyl player elements
+        this.vinylPlayer = document.getElementById('vinylPlayer');
+        this.vinylRecord = document.getElementById('vinylRecord');
+        this.tonearm = document.getElementById('tonearm');
+        this.playerPlayBtn = document.getElementById('playerPlayBtn');
+        this.progressBar = document.getElementById('progressBar');
+        this.progressFill = document.getElementById('progressFill');
+        this.currentTimeEl = document.getElementById('currentTime');
+        this.totalTimeEl = document.getElementById('totalTime');
+        
+        // Initialize audio element with Web Audio API for visualization
+        this.audio = new Audio('assets/music/Nick Cave & The Bad Seeds - O Children (Official Audio).mp3');
+        this.audio.loop = true;
+        this.audio.volume = 0.7;
+        this.audio.crossOrigin = "anonymous";
+        
+        // Web Audio API setup for real-time analysis
+        this.audioContext = null;
+        this.analyser = null;
+        this.dataArray = null;
+        this.source = null;
         this.translations = {
             en: {
                 title: 'Jazz Dancer',
@@ -92,12 +114,40 @@ class JazzDancer {
         this.initBricks();
         this.initLangSwitch();
         this.cycleQuotes();
+        this.setupAudioAnalysis();
+        this.initVinylPlayer();
+    }
+    
+    setupAudioAnalysis() {
+        // Initialize Web Audio API when user first interacts
+        document.addEventListener('click', () => {
+            if (!this.audioContext) {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                this.analyser = this.audioContext.createAnalyser();
+                this.analyser.fftSize = 64; // Small FFT size for 32 frequency bins
+                this.analyser.smoothingTimeConstant = 0.8;
+                
+                this.source = this.audioContext.createMediaElementSource(this.audio);
+                this.source.connect(this.analyser);
+                this.analyser.connect(this.audioContext.destination);
+                
+                this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+            }
+        }, { once: true });
     }
     
     bindEvents() {
         this.playBtn.addEventListener('click', () => this.toggleMusic());
         this.danceBtn.addEventListener('click', () => this.toggleDance());
         this.resetBtn.addEventListener('click', () => this.reset());
+        
+        // Vinyl player events
+        this.playerPlayBtn.addEventListener('click', () => this.toggleMusic());
+        this.progressBar.addEventListener('click', (e) => this.seekAudio(e));
+        
+        // Audio events for progress tracking
+        this.audio.addEventListener('loadedmetadata', () => this.updateDuration());
+        this.audio.addEventListener('timeupdate', () => this.updateProgress());
         
         // Add keyboard controls
         document.addEventListener('keydown', (e) => {
@@ -139,13 +189,27 @@ class JazzDancer {
         if (this.isMusicPlaying) {
             this.playBtn.textContent = t.pause;
             this.playBtn.classList.add('active');
+            this.playerPlayBtn.textContent = '⏸';
             this.startBrickEffect();
+            this.showVinylPlayer();
+            this.showMusicVisualization();
+            this.startVinylAnimation();
             this.showMessage(t.musicMsg);
+            // Play the audio
+            this.audio.play().catch(e => {
+                console.log('Audio play failed:', e);
+                this.showMessage('Click to enable audio');
+            });
         } else {
             this.playBtn.textContent = t.play;
             this.playBtn.classList.remove('active');
+            this.playerPlayBtn.textContent = '▶';
             this.stopBrickEffect();
+            this.stopVinylAnimation();
+            this.hideMusicVisualization();
             this.showMessage(t.musicPaused);
+            // Pause the audio
+            this.audio.pause();
         }
     }
     
@@ -207,11 +271,20 @@ class JazzDancer {
         const t = this.translations[this.currentLang];
         this.playBtn.textContent = t.play;
         this.playBtn.classList.remove('active');
+        this.playerPlayBtn.textContent = '▶';
         this.danceBtn.textContent = t.start;
         this.danceBtn.classList.remove('active');
         this.stopDance();
         this.stopBrickEffect();
+        this.stopVinylAnimation();
+        this.hideVinylPlayer();
+        this.hideMusicVisualization();
         this.showMessage(t.resetMsg);
+        // Stop and reset audio
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.progressFill.style.width = '0%';
+        this.currentTimeEl.textContent = '0:00';
     }
     
     createParticles() {
@@ -252,22 +325,56 @@ class JazzDancer {
     
     startBrickEffect() {
         if (this.brickRAF) return;
-        this.brickStartTime = performance.now();
-        const animate = (now) => {
-            const t = (now - this.brickStartTime) / 500; // speed factor
-            this.bricks.forEach((brick, i) => {
-                // Classic equalizer: sine wave with phase offset
-                const phase = (i / this.brickCount) * Math.PI * 2;
-                const height = 16 + Math.abs(Math.sin(t + phase)) * 32;
-                brick.style.height = height + 'px';
-                if (height > 35) {
-                    brick.classList.add('active');
-                } else {
-                    brick.classList.remove('active');
-                }
-            });
+        
+        const animate = () => {
+            if (!this.isMusicPlaying) return;
+            
+            if (this.analyser && this.dataArray) {
+                // Get real audio frequency data
+                this.analyser.getByteFrequencyData(this.dataArray);
+                
+                // Map frequency data to bricks
+                const step = Math.floor(this.dataArray.length / this.brickCount);
+                this.bricks.forEach((brick, i) => {
+                    const dataIndex = Math.min(i * step, this.dataArray.length - 1);
+                    const amplitude = this.dataArray[dataIndex];
+                    
+                    // Convert amplitude (0-255) to height (16-48px)
+                    const height = 16 + (amplitude / 255) * 32;
+                    brick.style.height = height + 'px';
+                    
+                    // Add active class for higher amplitudes
+                    if (amplitude > 100) {
+                        brick.classList.add('active');
+                        // Add extra glow for very high amplitudes
+                        if (amplitude > 180) {
+                            brick.style.boxShadow = '0 0 8px #ff4081';
+                        } else {
+                            brick.style.boxShadow = 'none';
+                        }
+                    } else {
+                        brick.classList.remove('active');
+                        brick.style.boxShadow = 'none';
+                    }
+                });
+            } else {
+                // Fallback to sine wave animation if audio analysis isn't available
+                const t = performance.now() / 500;
+                this.bricks.forEach((brick, i) => {
+                    const phase = (i / this.brickCount) * Math.PI * 2;
+                    const height = 16 + Math.abs(Math.sin(t + phase)) * 32;
+                    brick.style.height = height + 'px';
+                    if (height > 35) {
+                        brick.classList.add('active');
+                    } else {
+                        brick.classList.remove('active');
+                    }
+                });
+            }
+            
             this.brickRAF = requestAnimationFrame(animate);
         };
+        
         this.brickRAF = requestAnimationFrame(animate);
     }
     
@@ -279,6 +386,7 @@ class JazzDancer {
         this.bricks.forEach(brick => {
             brick.classList.remove('active');
             brick.style.height = '16px';
+            brick.style.boxShadow = 'none';
         });
     }
     
@@ -367,6 +475,65 @@ class JazzDancer {
                 }
             }, 300);
         }, 2000);
+    }
+    
+    // Vinyl Player Methods
+    initVinylPlayer() {
+        this.vinylPlayer.style.display = 'block';
+    }
+    
+    showVinylPlayer() {
+        this.vinylPlayer.classList.add('active');
+    }
+    
+    hideVinylPlayer() {
+        this.vinylPlayer.classList.remove('active');
+    }
+    
+    showMusicVisualization() {
+        const musicVisualization = document.querySelector('.music-visualization');
+        if (musicVisualization) {
+            musicVisualization.classList.add('active');
+        }
+    }
+    
+    hideMusicVisualization() {
+        const musicVisualization = document.querySelector('.music-visualization');
+        if (musicVisualization) {
+            musicVisualization.classList.remove('active');
+        }
+    }
+    
+    startVinylAnimation() {
+        this.vinylRecord.classList.add('spinning');
+        this.tonearm.classList.add('playing');
+    }
+    
+    stopVinylAnimation() {
+        this.vinylRecord.classList.remove('spinning');
+        this.tonearm.classList.remove('playing');
+    }
+    
+    updateProgress() {
+        const progress = (this.audio.currentTime / this.audio.duration) * 100;
+        this.progressFill.style.width = progress + '%';
+        this.currentTimeEl.textContent = this.formatTime(this.audio.currentTime);
+    }
+    
+    updateDuration() {
+        this.totalTimeEl.textContent = this.formatTime(this.audio.duration);
+    }
+    
+    seekAudio(e) {
+        const rect = this.progressBar.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        this.audio.currentTime = pos * this.audio.duration;
+    }
+    
+    formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
     }
 }
 
