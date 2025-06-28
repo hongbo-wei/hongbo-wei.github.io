@@ -1379,9 +1379,11 @@ body {
         width: 100%;
         max-width: 100%;
         height: auto;
+        min-height: 70vh; /* Ensure container takes up most of screen */
         gap: 1rem;
-        padding: 0 1rem;
+        padding: 0 0.5rem;
         align-items: center;
+        justify-content: center;
     }
     
     .controls {
@@ -1397,6 +1399,8 @@ body {
         max-width: 100%;
         width: 100%;
         order: 1;
+        min-height: 60vh; /* Ensure adequate height on mobile */
+        margin-bottom: 1rem;
     }
     
     .vinyl-player {
@@ -1627,19 +1631,21 @@ body {
 @media (max-width: 768px) {
     .container {
         max-width: 100%;
-        padding: 1rem;
+        padding: 0.5rem;
     }
     
     .ascii-display {
-        font-size: 4px;
-        min-height: 400px; /* Taller on mobile too */
-        line-height: 0.8;
+        font-size: 6px; /* Increased from 4px */
+        min-height: 60vh; /* Use viewport height for better mobile scaling */
+        line-height: 0.9;
     }
     
     .ascii-dancer-container {
-        max-width: 95%; /* Larger on mobile too */
-        padding: 0.6rem; /* Adjusted padding */
-        margin: 0 auto 0.5rem;
+        max-width: 100%; /* Use full width */
+        width: 100%;
+        padding: 1rem; /* More padding for better appearance */
+        margin: 0 auto 1rem;
+        min-height: 60vh; /* Ensure adequate height */
     }
     
     .title {
@@ -1649,14 +1655,16 @@ body {
 
 @media (max-width: 480px) {
     .ascii-display {
-        font-size: 3px;
-        min-height: 360px; /* Taller on smaller mobile screens */
-        line-height: 0.7;
+        font-size: 5px; /* Increased from 3px */
+        min-height: 55vh; /* Use viewport height */
+        line-height: 0.8;
     }
     
     .ascii-dancer-container {
-        padding: 0.5rem;
-        max-width: 98%;
+        padding: 0.8rem;
+        max-width: 100%;
+        width: 100%;
+        min-height: 55vh;
     }
     
     .title {
@@ -1667,6 +1675,28 @@ body {
     .title-icon {
         width: 2rem;
         height: 2rem;
+    }
+}
+
+/* Additional mobile optimizations */
+@media (max-width: 390px) {
+    .container {
+        padding: 0.25rem;
+    }
+    
+    .ascii-display {
+        font-size: 4.5px;
+        min-height: 50vh;
+        line-height: 0.75;
+    }
+    
+    .ascii-dancer-container {
+        padding: 0.5rem;
+        min-height: 50vh;
+    }
+    
+    .title {
+        font-size: 1.5rem;
     }
 }
 
