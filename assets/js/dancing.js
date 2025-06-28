@@ -587,7 +587,7 @@ class JazzDancer {
         this.isAsciiDancing = true;
         this.asciiDisplay.classList.add('dancing');
         
-        const frameDelay = this.isMusicPlaying ? 50 : 90; // Slightly slower to better showcase all frames
+        const frameDelay = this.isMusicPlaying ? 80 : 100; // Slightly slower to better showcase all frames
         
         this.asciiAnimationId = setInterval(() => {
             if (this.asciiCurrentFrame < this.asciiFrames.length) {
