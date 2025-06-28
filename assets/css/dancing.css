@@ -33,6 +33,25 @@ body {
     color: #1a1a1a;
     margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.title-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    filter: brightness(0) saturate(100%);
+    transition: transform 0.3s ease;
+}
+
+.title-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.title-text {
+    display: inline;
 }
 
 .subtitle {
@@ -754,6 +773,12 @@ body {
     
     .title {
         font-size: 2.5rem;
+        gap: 0.3rem;
+    }
+    
+    .title-icon {
+        width: 2.8rem;
+        height: 2.8rem;
     }
     
     /* Move language switch button more to the right on mobile */
