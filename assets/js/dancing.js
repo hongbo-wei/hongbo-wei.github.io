@@ -1,6 +1,5 @@
 class JazzDancer {
     constructor() {
-        this.dancer = document.querySelector('.dancer-svg');
         this.playBtn = document.getElementById('playBtn');
         this.danceBtn = document.getElementById('danceBtn');
         this.resetBtn = document.getElementById('resetBtn');
@@ -8,6 +7,13 @@ class JazzDancer {
         this.musicBricks = document.getElementById('musicBricks');
         this.langSwitch = document.getElementById('langSwitch');
         this.currentLang = 'en';
+        
+        // ASCII dancer elements
+        this.asciiDisplay = document.getElementById('asciiDisplay');
+        this.asciiFrames = [];
+        this.asciiCurrentFrame = 0;
+        this.asciiAnimationId = null;
+        this.isAsciiDancing = false;
         
         // Vinyl player elements
         this.vinylPlayer = document.getElementById('vinylPlayer');
@@ -116,6 +122,7 @@ class JazzDancer {
         this.cycleQuotes();
         this.setupAudioAnalysis();
         this.initVinylPlayer();
+        this.loadAsciiFrames();
     }
     
     setupAudioAnalysis() {
@@ -165,20 +172,8 @@ class JazzDancer {
             }
         });
         
-        // Add mouse interaction
-        this.dancer.addEventListener('mouseenter', () => {
-            if (!this.isDancing) {
-                this.dancer.style.transform = 'scale(1.05)';
-            }
-        });
-        
-        this.dancer.addEventListener('mouseleave', () => {
-            if (!this.isDancing) {
-                this.dancer.style.transform = 'scale(1)';
-            }
-        });
-        
-        this.dancer.addEventListener('click', () => {
+        // Add mouse interaction for ASCII dancer
+        this.asciiDisplay.addEventListener('click', () => {
             this.performSpecialMove();
         });
     }
@@ -221,25 +216,19 @@ class JazzDancer {
             this.danceBtn.classList.add('active');
             this.startDanceSequence();
             this.showMessage(t.danceMsg);
+            this.startAsciiDance();
         } else {
             this.danceBtn.textContent = t.start;
             this.danceBtn.classList.remove('active');
             this.stopDance();
             this.showMessage(t.danceStopped);
+            this.stopAsciiDance();
         }
     }
     
     startDanceSequence() {
-        const danceMoves = ['dancing', 'spinning', 'leaping'];
-        let moveIndex = 0;
-        
-        this.currentAnimation = setInterval(() => {
-            // Remove all dance classes first
-            this.dancer.classList.remove('dancing', 'spinning', 'leaping');
-            // Add the current dance move class
-            this.dancer.classList.add(danceMoves[moveIndex]);
-            moveIndex = (moveIndex + 1) % danceMoves.length;
-        }, 3000);
+        // For ASCII dancer, the animation is handled in startAsciiDance
+        // This method is kept for compatibility but doesn't need to do anything
     }
     
     stopDance() {
@@ -247,17 +236,15 @@ class JazzDancer {
             clearInterval(this.currentAnimation);
             this.currentAnimation = null;
         }
-        // Remove all dance classes
-        this.dancer.classList.remove('dancing', 'spinning', 'leaping');
     }
     
     performSpecialMove() {
         const t = this.translations[this.currentLang];
         if (this.isDancing) {
-            // Perform a special twirl animation for SVG
-            this.dancer.style.animation = 'svgSpin 0.8s ease-in-out';
+            // Create special effect for ASCII dancer
+            this.asciiDisplay.style.animation = 'ascii-special-glow 0.8s ease-in-out';
             setTimeout(() => {
-                this.dancer.style.animation = '';
+                this.asciiDisplay.style.animation = '';
             }, 800);
             
             this.createSpecialParticles();
@@ -275,6 +262,7 @@ class JazzDancer {
         this.danceBtn.textContent = t.start;
         this.danceBtn.classList.remove('active');
         this.stopDance();
+        this.stopAsciiDance();
         this.stopBrickEffect();
         this.stopVinylAnimation();
         this.hideVinylPlayer();
@@ -535,20 +523,109 @@ class JazzDancer {
         const secs = Math.floor(seconds % 60);
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     }
+    
+    // ASCII Dance Methods
+    async loadAsciiFrames() {
+        // Load ASCII frames from the dancing_ascii directory
+        this.asciiFrames = [];
+        this.asciiDisplay.textContent = "Loading ASCII dancer... 🎭";
+        
+        try {
+            // Try to load all 200 frames
+            for (let i = 1; i <= 200; i++) {
+                const frameNumber = i.toString().padStart(4, '0');
+                try {
+                    const response = await fetch(`assets/img/dancing/dancing_ascii/dancing_${frameNumber}.txt`);
+                    if (response.ok) {
+                        const frameContent = await response.text();
+                        this.asciiFrames.push(frameContent);
+                    } else {
+                        console.warn(`Could not load frame ${frameNumber}: ${response.status}`);
+                        break; // Stop trying if we can't load frames
+                    }
+                } catch (fetchError) {
+                    console.warn(`Error fetching frame ${frameNumber}:`, fetchError);
+                    break;
+                }
+            }
+            
+            console.log(`Loaded ${this.asciiFrames.length} ASCII frames total`);
+            
+            // Show first frame as preview
+            if (this.asciiFrames.length > 0) {
+                this.asciiDisplay.textContent = this.asciiFrames[0];
+            } else {
+                throw new Error('No frames could be loaded');
+            }
+        } catch (error) {
+            console.error('Error loading ASCII frames:', error);
+            // Fallback to a simple static dancer
+            this.asciiFrames = [this.getStaticDancer()];
+            this.asciiDisplay.textContent = this.asciiFrames[0];
+        }
+    }
+    
+    getStaticDancer() {
+        return `
+        ✨ ASCII DANCER ✨
+        
+            💃 🎵 💃
+        
+        � Ready to Dance! �
+        
+        (Using fallback animation)
+        `;
+    }
+    
+    startAsciiDance() {
+        if (this.asciiFrames.length === 0) {
+            console.warn('No ASCII frames loaded, using fallback');
+            this.asciiFrames = [this.getStaticDancer()];
+            this.asciiDisplay.textContent = this.asciiFrames[0];
+        }
+        
+        this.isAsciiDancing = true;
+        this.asciiDisplay.classList.add('dancing');
+        
+        const frameDelay = this.isMusicPlaying ? 50 : 90; // Slightly slower to better showcase all frames
+        
+        this.asciiAnimationId = setInterval(() => {
+            if (this.asciiCurrentFrame < this.asciiFrames.length) {
+                this.asciiDisplay.textContent = this.asciiFrames[this.asciiCurrentFrame];
+                this.asciiCurrentFrame = (this.asciiCurrentFrame + 1) % this.asciiFrames.length;
+            }
+        }, frameDelay);
+    }
+    
+    stopAsciiDance() {
+        this.isAsciiDancing = false;
+        this.asciiDisplay.classList.remove('dancing');
+        
+        if (this.asciiAnimationId) {
+            clearInterval(this.asciiAnimationId);
+            this.asciiAnimationId = null;
+        }
+        
+        // Reset to first frame
+        this.asciiCurrentFrame = 0;
+        if (this.asciiFrames.length > 0) {
+            this.asciiDisplay.textContent = this.asciiFrames[0];
+        }
+    }
 }
 
 // Initialize the app when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     new JazzDancer();
     
-    // Add some initial charm with entrance animation
+    // Add some initial charm with entrance animation for ASCII display
     setTimeout(() => {
-        const dancer = document.querySelector('.dancer-svg');
-        if (dancer) {
-            dancer.style.animation = 'svgEntrance 2s ease-in-out';
+        const asciiDisplay = document.getElementById('asciiDisplay');
+        if (asciiDisplay) {
+            asciiDisplay.style.animation = 'ascii-entrance 2s ease-in-out';
             setTimeout(() => {
-                dancer.style.animation = '';
+                asciiDisplay.style.animation = '';
             }, 2000);
         }
     }, 1000);
-}); 
+});
