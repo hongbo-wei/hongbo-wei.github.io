@@ -530,64 +530,191 @@ class JazzDancer {
         this.asciiFrames = [];
         this.asciiDisplay.textContent = "Loading ASCII dancer... 🎭";
         
+        // Add immediate fallback frames for mobile devices
+        const fallbackFrames = this.getFallbackFrames();
+        
         try {
-            // Try to load all 200 frames
-            for (let i = 1; i <= 200; i++) {
-                const frameNumber = i.toString().padStart(4, '0');
-                try {
-                    const response = await fetch(`assets/img/dancing/dancing_ascii/dancing_${frameNumber}.txt`);
-                    if (response.ok) {
-                        const frameContent = await response.text();
-                        this.asciiFrames.push(frameContent);
-                    } else {
-                        console.warn(`Could not load frame ${frameNumber}: ${response.status}`);
-                        break; // Stop trying if we can't load frames
-                    }
-                } catch (fetchError) {
-                    console.warn(`Error fetching frame ${frameNumber}:`, fetchError);
-                    break;
+            // Limit concurrent requests for mobile devices
+            const isMobile = window.innerWidth <= 768;
+            const maxFrames = isMobile ? 50 : 200; // Load fewer frames on mobile
+            const batchSize = isMobile ? 5 : 10; // Smaller batches on mobile
+            
+            console.log(`Loading ${maxFrames} frames for ${isMobile ? 'mobile' : 'desktop'}`);
+            
+            // Load frames in batches to avoid overwhelming mobile networks
+            for (let batch = 0; batch < Math.ceil(maxFrames / batchSize); batch++) {
+                const promises = [];
+                const start = batch * batchSize + 1;
+                const end = Math.min(start + batchSize - 1, maxFrames);
+                
+                for (let i = start; i <= end; i++) {
+                    const frameNumber = i.toString().padStart(4, '0');
+                    promises.push(
+                        fetch(`assets/img/dancing/dancing_ascii/dancing_${frameNumber}.txt`, {
+                            cache: 'force-cache' // Use cache aggressively on mobile
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.text().then(content => ({ index: i - 1, content }));
+                            }
+                            throw new Error(`HTTP ${response.status}`);
+                        })
+                        .catch(error => {
+                            console.warn(`Frame ${frameNumber} failed:`, error.message);
+                            return null;
+                        })
+                    );
+                }
+                
+                const results = await Promise.allSettled(promises);
+                const loadedFrames = results
+                    .filter(result => result.status === 'fulfilled' && result.value)
+                    .map(result => result.value);
+                
+                // Add loaded frames in order
+                loadedFrames.forEach(frame => {
+                    this.asciiFrames[frame.index] = frame.content;
+                });
+                
+                // Show progress on mobile
+                if (isMobile && this.asciiFrames.length > 0) {
+                    this.asciiDisplay.textContent = `Loading... ${this.asciiFrames.length}/${maxFrames} frames`;
+                }
+                
+                // Small delay between batches to not overwhelm mobile devices
+                if (batch < Math.ceil(maxFrames / batchSize) - 1) {
+                    await new Promise(resolve => setTimeout(resolve, isMobile ? 100 : 50));
                 }
             }
             
-            console.log(`Loaded ${this.asciiFrames.length} ASCII frames total`);
+            // Filter out undefined entries and ensure we have frames
+            this.asciiFrames = this.asciiFrames.filter(frame => frame);
+            
+            console.log(`Successfully loaded ${this.asciiFrames.length} ASCII frames`);
+            
+            // If we couldn't load enough frames, use fallback
+            if (this.asciiFrames.length < 10) {
+                console.warn('Too few frames loaded, using fallback animation');
+                this.asciiFrames = fallbackFrames;
+            }
             
             // Show first frame as preview
             if (this.asciiFrames.length > 0) {
                 this.asciiDisplay.textContent = this.asciiFrames[0];
-            } else {
-                throw new Error('No frames could be loaded');
             }
         } catch (error) {
             console.error('Error loading ASCII frames:', error);
-            // Fallback to a simple static dancer
-            this.asciiFrames = [this.getStaticDancer()];
+            // Use fallback frames
+            this.asciiFrames = fallbackFrames;
             this.asciiDisplay.textContent = this.asciiFrames[0];
         }
     }
     
+    getFallbackFrames() {
+        // Embedded ASCII frames that work immediately without network requests
+        return [
+            this.getStaticDancer(),
+            `
+    ✨ JAZZ DANCER ✨
+    
+        👤
+       /|\\    🎵
+       / \\
+    
+    ~ Step Right ~
+            `,
+            `
+    ✨ JAZZ DANCER ✨
+    
+        👤
+       \\|/    🎶
+        |
+       / \\
+    
+    ~ Arms Up ~
+            `,
+            `
+    ✨ JAZZ DANCER ✨
+    
+        👤
+        |\\    🎵
+        |
+        >\\
+    
+    ~ Kick Left ~
+            `,
+            `
+    ✨ JAZZ DANCER ✨
+    
+        👤
+       /|     🎶
+        |
+       /<
+    
+    ~ Kick Right ~
+            `,
+            `
+    ✨ JAZZ DANCER ✨
+    
+        👤
+       /|\\    🎵
+       / \\
+    
+    ~ Jazz Hands ~
+            `,
+            `
+    ✨ JAZZ DANCER ✨
+    
+        👤
+        |⚡   🎶
+        |
+       / \\
+    
+    ~ Spin Move ~
+            `,
+            `
+    ✨ JAZZ DANCER ✨
+    
+       \\👤/   
+        |     🎵
+       / \\
+    
+    ~ Big Finish ~
+            `
+        ];
+    }
+    
     getStaticDancer() {
         return `
-        ✨ ASCII DANCER ✨
-        
-            💃 🎵 💃
-        
-        � Ready to Dance! �
-        
-        (Using fallback animation)
+    ✨ JAZZ DANCER ✨
+    
+        👤
+       /|\\    🎵
+       / \\
+    
+    Ready to Dance!
+    
+    🎶 Click 'Start Dancing' 🎶
         `;
     }
     
     startAsciiDance() {
         if (this.asciiFrames.length === 0) {
             console.warn('No ASCII frames loaded, using fallback');
-            this.asciiFrames = [this.getStaticDancer()];
+            this.asciiFrames = this.getFallbackFrames();
             this.asciiDisplay.textContent = this.asciiFrames[0];
         }
         
         this.isAsciiDancing = true;
         this.asciiDisplay.classList.add('dancing');
         
-        const frameDelay = this.isMusicPlaying ? 80 : 100; // Slightly slower to better showcase all frames
+        // Optimize animation speed for mobile devices
+        const isMobile = window.innerWidth <= 768;
+        const frameDelay = isMobile ? 
+            (this.isMusicPlaying ? 120 : 150) :  // Slower on mobile for better visibility
+            (this.isMusicPlaying ? 80 : 100);    // Original speed on desktop
+        
+        console.log(`Starting ASCII dance with ${this.asciiFrames.length} frames, delay: ${frameDelay}ms`);
         
         this.asciiAnimationId = setInterval(() => {
             if (this.asciiCurrentFrame < this.asciiFrames.length) {
