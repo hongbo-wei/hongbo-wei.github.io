@@ -416,7 +416,7 @@ class JazzDancer {
         // Reset quote index when language changes to avoid array bounds issues
         this.quoteIndex = 0;
         
-        document.getElementById('mainTitle').textContent = t.title;
+        document.querySelector('#mainTitle .title-text').textContent = t.title;
         document.getElementById('mainSubtitle').textContent = t.subtitle;
         document.getElementById('playBtn').textContent = this.isMusicPlaying ? t.pause : t.play;
         document.getElementById('danceBtn').textContent = this.isDancing ? t.stop : t.start;
