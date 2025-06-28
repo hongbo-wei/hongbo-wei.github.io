@@ -708,11 +708,10 @@ class JazzDancer {
         this.isAsciiDancing = true;
         this.asciiDisplay.classList.add('dancing');
         
-        // Optimize animation speed for mobile devices
+        // Synchronize animation speed between mobile and desktop when music is playing
         const isMobile = window.innerWidth <= 768;
-        const frameDelay = isMobile ? 
-            (this.isMusicPlaying ? 120 : 150) :  // Slower on mobile for better visibility
-            (this.isMusicPlaying ? 80 : 100);    // Original speed on desktop
+        const frameDelay = this.isMusicPlaying ? 80 :  // Same fast speed for both when music plays
+            (isMobile ? 100 : 100);                   // Different speeds only when no music
         
         console.log(`Starting ASCII dance with ${this.asciiFrames.length} frames, delay: ${frameDelay}ms`);
         
