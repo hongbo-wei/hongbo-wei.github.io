@@ -1085,7 +1085,7 @@ body {
     
     .vinyl-player {
         max-width: 100%;
-        width: 100%;
+        width: 80%;
         order: 3;
         display: none !important; /* Hide by default on mobile */
         padding: 1rem;
@@ -1318,7 +1318,7 @@ body {
 /* Responsive ASCII display - mobile overrides */
 @media (max-width: 768px) {
     .container {
-        max-width: 100%;
+        max-width: 80%;
         padding: 0.5rem;
         min-height: 100vh;
     }
