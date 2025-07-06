@@ -1318,7 +1318,7 @@ body {
 /* Responsive ASCII display - mobile overrides */
 @media (max-width: 768px) {
     .container {
-        max-width: 80%;
+        max-width: 70%;
         padding: 0.5rem;
         min-height: 100vh;
     }
