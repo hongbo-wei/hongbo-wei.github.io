@@ -528,20 +528,21 @@ class JazzDancer {
     async loadAsciiFrames() {
         // Load ASCII frames from the dancing_ascii directory
         this.asciiFrames = [];
-        this.asciiDisplay.textContent = "Loading ASCII dancer... 🎭";
+        
+        // Show large, visible loading message
+        this.showLoadingMessage("Loading ASCII dancer... 🎭");
         
         // Add immediate fallback frames for mobile devices
         const fallbackFrames = this.getFallbackFrames();
         
         try {
-            // Limit concurrent requests for mobile devices
-            const isMobile = window.innerWidth <= 768;
-            const maxFrames = isMobile ? 50 : 200; // Load fewer frames on mobile
-            const batchSize = isMobile ? 5 : 10; // Smaller batches on mobile
+            // Load all 600 frames for both mobile and desktop
+            const maxFrames = 600; // Same for all devices
+            const batchSize = 10; // Same batch size for all devices
             
-            console.log(`Loading ${maxFrames} frames for ${isMobile ? 'mobile' : 'desktop'}`);
+            console.log(`Loading ${maxFrames} frames for all devices`);
             
-            // Load frames in batches to avoid overwhelming mobile networks
+            // Load frames in batches
             for (let batch = 0; batch < Math.ceil(maxFrames / batchSize); batch++) {
                 const promises = [];
                 const start = batch * batchSize + 1;
@@ -551,7 +552,7 @@ class JazzDancer {
                     const frameNumber = i.toString().padStart(4, '0');
                     promises.push(
                         fetch(`assets/img/dancing/dancing_ascii/dancing_${frameNumber}.txt`, {
-                            cache: 'force-cache' // Use cache aggressively on mobile
+                            cache: 'force-cache' // Use cache for all devices
                         })
                         .then(response => {
                             if (response.ok) {
@@ -576,14 +577,14 @@ class JazzDancer {
                     this.asciiFrames[frame.index] = frame.content;
                 });
                 
-                // Show progress on mobile
-                if (isMobile && this.asciiFrames.length > 0) {
-                    this.asciiDisplay.textContent = `Loading... ${this.asciiFrames.length}/${maxFrames} frames`;
+                // Show progress for all devices with large, visible text
+                if (this.asciiFrames.length > 0) {
+                    this.showLoadingMessage(`Loading... ${this.asciiFrames.length}/${maxFrames} frames`);
                 }
                 
-                // Small delay between batches to not overwhelm mobile devices
+                // Small delay between batches for all devices
                 if (batch < Math.ceil(maxFrames / batchSize) - 1) {
-                    await new Promise(resolve => setTimeout(resolve, isMobile ? 100 : 50));
+                    await new Promise(resolve => setTimeout(resolve, 50));
                 }
             }
             
@@ -600,16 +601,40 @@ class JazzDancer {
             
             // Show first frame as preview
             if (this.asciiFrames.length > 0) {
+                this.clearLoadingMessage();
                 this.asciiDisplay.textContent = this.asciiFrames[0];
             }
         } catch (error) {
             console.error('Error loading ASCII frames:', error);
             // Use fallback frames
             this.asciiFrames = fallbackFrames;
+            this.clearLoadingMessage();
             this.asciiDisplay.textContent = this.asciiFrames[0];
         }
     }
     
+    showLoadingMessage(text) {
+        // Clear any existing content
+        this.asciiDisplay.textContent = '';
+        
+        // Create a large, visible loading message
+        this.asciiDisplay.style.fontSize = '18px';
+        this.asciiDisplay.style.lineHeight = '1.4';
+        this.asciiDisplay.style.color = '#ff4081';
+        this.asciiDisplay.style.textShadow = '0 0 10px rgba(255, 64, 129, 0.8)';
+        this.asciiDisplay.style.fontWeight = 'bold';
+        this.asciiDisplay.textContent = text;
+    }
+    
+    clearLoadingMessage() {
+        // Reset to normal ASCII display styles - adjusted for better proportions
+        this.asciiDisplay.style.fontSize = '7px'; // Adjusted for better width/height ratio
+        this.asciiDisplay.style.lineHeight = '1.0'; // Increased for better spacing
+        this.asciiDisplay.style.color = '#ff4081';
+        this.asciiDisplay.style.textShadow = '0 0 5px rgba(255, 64, 129, 0.5)';
+        this.asciiDisplay.style.fontWeight = 'normal';
+    }
+
     getFallbackFrames() {
         // Embedded ASCII frames that work immediately without network requests
         return [
@@ -705,13 +730,14 @@ class JazzDancer {
             this.asciiDisplay.textContent = this.asciiFrames[0];
         }
         
+        // Clear any loading message and reset to normal display
+        this.clearLoadingMessage();
+        
         this.isAsciiDancing = true;
         this.asciiDisplay.classList.add('dancing');
         
-        // Synchronize animation speed between mobile and desktop when music is playing
-        const isMobile = window.innerWidth <= 768;
-        const frameDelay = this.isMusicPlaying ? 80 :  // Same fast speed for both when music plays
-            (isMobile ? 100 : 100);                   // Different speeds only when no music
+        // Same animation speed for all devices
+        const frameDelay = this.isMusicPlaying ? 20 : 30; // Fast when music plays, medium when no music
         
         console.log(`Starting ASCII dance with ${this.asciiFrames.length} frames, delay: ${frameDelay}ms`);
         

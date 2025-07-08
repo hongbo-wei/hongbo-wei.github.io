@@ -1323,7 +1323,7 @@ body {
 /* Responsive ASCII display - mobile overrides */
 @media (max-width: 768px) {
     .container {
-        max-width: 70%;
+        max-width: 80%;
         padding: 0.5rem;
         min-height: 100vh;
     }
@@ -1338,7 +1338,6 @@ body {
     .ascii-display {
         font-size: 8px;
         min-height: 400px; /* Fixed height instead of viewport */
-        max-height: 450px; /* Prevent it from getting too tall */
         line-height: 0.9;
         padding: 0.5rem;
         display: flex;
