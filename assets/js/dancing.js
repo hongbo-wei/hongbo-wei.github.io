@@ -737,7 +737,7 @@ class JazzDancer {
         this.asciiDisplay.classList.add('dancing');
         
         // Same animation speed for all devices
-        const frameDelay = this.isMusicPlaying ? 20 : 30; // Fast when music plays, medium when no music
+        const frameDelay = this.isMusicPlaying ? 30 : 30; // Same speed when music plays
         
         console.log(`Starting ASCII dance with ${this.asciiFrames.length} frames, delay: ${frameDelay}ms`);
         
