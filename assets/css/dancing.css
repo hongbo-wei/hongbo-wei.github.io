@@ -1038,12 +1038,16 @@ body {
         height: 2.8rem;
     }
     
-    /* Move language switch button more to the right on mobile */
+    /* Move language switch button to very top right on mobile */
     .lang-switch {
-        top: 1rem;
-        right: 1rem;
-        padding: 6px 12px;
-        font-size: 0.8rem;
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 3px 6px;
+        font-size: 0.6rem;
+        z-index: 100;
+        border-radius: 0 0 0 8px;
+        box-shadow: 0 1px 3px rgba(255, 64, 129, 0.2);
     }
     
     /* Reorder main sections on mobile */
@@ -1249,7 +1253,7 @@ body {
     margin: 0 auto 1rem;
     background: #0a0a0a;
     border-radius: 12px;
-    padding: 1.2rem; /* Increased padding for taller appearance */
+    padding: 0.1rem; /* Increased padding for taller appearance */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     border: 2px solid #333;
     overflow: hidden;
@@ -1264,6 +1268,7 @@ body {
     white-space: pre;
     margin: 0;
     text-align: center;
+    height: 100%;
     min-height: 450px; /* Made taller for better ASCII display */
     display: flex;
     align-items: center;
@@ -1472,9 +1477,9 @@ body {
 
 /* Language Switch Button */
 .lang-switch {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
     background: linear-gradient(145deg, #ff4081, #e91e63);
     color: white;
     border: none;
@@ -1486,7 +1491,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(255, 64, 129, 0.3);
-    z-index: 10;
+    z-index: 100;
 }
 
 .lang-switch:hover {
