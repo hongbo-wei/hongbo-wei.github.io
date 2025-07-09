@@ -617,22 +617,14 @@ class JazzDancer {
         // Clear any existing content
         this.asciiDisplay.textContent = '';
         
-        // Create a large, visible loading message
-        this.asciiDisplay.style.fontSize = '18px';
-        this.asciiDisplay.style.lineHeight = '1.4';
-        this.asciiDisplay.style.color = '#ff4081';
-        this.asciiDisplay.style.textShadow = '0 0 10px rgba(255, 64, 129, 0.8)';
-        this.asciiDisplay.style.fontWeight = 'bold';
+        // Use CSS class for loading message styling
+        this.asciiDisplay.classList.add('loading-message');
         this.asciiDisplay.textContent = text;
     }
     
     clearLoadingMessage() {
-        // Reset to normal ASCII display styles - adjusted for better proportions
-        this.asciiDisplay.style.fontSize = '7px'; // Adjusted for better width/height ratio
-        this.asciiDisplay.style.lineHeight = '1.0'; // Increased for better spacing
-        this.asciiDisplay.style.color = '#ff4081';
-        this.asciiDisplay.style.textShadow = '0 0 5px rgba(255, 64, 129, 0.5)';
-        this.asciiDisplay.style.fontWeight = 'normal';
+        // Remove loading message class to return to normal ASCII display styles
+        this.asciiDisplay.classList.remove('loading-message');
     }
 
     getFallbackFrames() {
