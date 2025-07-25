@@ -538,7 +538,7 @@ class JazzDancer {
         try {
             // Load all 600 frames for both mobile and desktop
             const maxFrames = 600; // Same for all devices
-            const batchSize = 10; // Same batch size for all devices
+            const batchSize = 100; // 改为每100个一批加载
             
             console.log(`Loading ${maxFrames} frames for all devices`);
             
