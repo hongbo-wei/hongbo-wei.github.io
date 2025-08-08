@@ -1,3 +1,29 @@
+/* from newcss.css 合并优化 */
+.contact:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    background: #0c0c0c;
+}
+.contact {
+    background-image: url(../img/contact-visual.png)!important;
+}
+.contact--lockup {
+    width: 75%;
+}
+.space {
+    padding: 50px 0;
+}
+#clustrmap-container {
+    max-width: 40%;
+    max-height: 40%;
+    overflow: show;
+    margin: auto;
+}
 @font-face {
     font-family: 'Montserrat';
     src: url("fonts/Montserrat-Black.eot");
