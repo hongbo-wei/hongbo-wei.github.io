@@ -313,56 +313,69 @@ class JazzDancer {
     
     startBrickEffect() {
         if (this.brickRAF) return;
-        
+
         const animate = () => {
             if (!this.isMusicPlaying) return;
-            
+
+            const center = Math.floor(this.brickCount / 2);
             if (this.analyser && this.dataArray) {
-                // Get real audio frequency data
                 this.analyser.getByteFrequencyData(this.dataArray);
-                
-                // Map frequency data to bricks
-                const step = Math.floor(this.dataArray.length / this.brickCount);
-                this.bricks.forEach((brick, i) => {
-                    const dataIndex = Math.min(i * step, this.dataArray.length - 1);
+
+                // 以中间为中心，左右对称分配频率数据
+                for (let i = 0; i < this.brickCount; i++) {
+                    // 计算距离中心的偏移
+                    const offset = Math.abs(i - center);
+                    // 频率数据分配：中心块用中间频率，两侧用更低/高频
+                    let dataIndex;
+                    if (i < center) {
+                        // 左侧：低频
+                        dataIndex = Math.floor((offset / center) * (this.dataArray.length / 2));
+                    } else if (i > center) {
+                        // 右侧：高频
+                        dataIndex = Math.floor((offset / center) * (this.dataArray.length / 2)) + (this.dataArray.length / 2);
+                    } else {
+                        // 中间块：中频
+                        dataIndex = Math.floor(this.dataArray.length / 2);
+                    }
+                    dataIndex = Math.min(Math.floor(dataIndex), this.dataArray.length - 1);
                     const amplitude = this.dataArray[dataIndex];
-                    
-                    // Convert amplitude (0-255) to height (16-48px)
+
+                    // 高度和样式
                     const height = 16 + (amplitude / 255) * 32;
-                    brick.style.height = height + 'px';
-                    
-                    // Add active class for higher amplitudes
+                    this.bricks[i].style.height = height + 'px';
+
                     if (amplitude > 100) {
-                        brick.classList.add('active');
-                        // Add extra glow for very high amplitudes
+                        this.bricks[i].classList.add('active');
                         if (amplitude > 180) {
-                            brick.style.boxShadow = '0 0 8px #ff4081';
+                            this.bricks[i].style.boxShadow = '0 0 8px #ff4081';
                         } else {
-                            brick.style.boxShadow = 'none';
+                            this.bricks[i].style.boxShadow = 'none';
                         }
                     } else {
-                        brick.classList.remove('active');
-                        brick.style.boxShadow = 'none';
+                        this.bricks[i].classList.remove('active');
+                        this.bricks[i].style.boxShadow = 'none';
                     }
-                });
+                }
             } else {
-                // Fallback to sine wave animation if audio analysis isn't available
+                // Fallback: 中间为主轴的对称动画
                 const t = performance.now() / 500;
-                this.bricks.forEach((brick, i) => {
-                    const phase = (i / this.brickCount) * Math.PI * 2;
-                    const height = 16 + Math.abs(Math.sin(t + phase)) * 32;
-                    brick.style.height = height + 'px';
+                for (let i = 0; i < this.brickCount; i++) {
+                    const center = Math.floor(this.brickCount / 2);
+                    const offset = Math.abs(i - center);
+                    const phase = (offset / center) * Math.PI + t;
+                    const height = 16 + Math.abs(Math.sin(phase)) * 32;
+                    this.bricks[i].style.height = height + 'px';
                     if (height > 35) {
-                        brick.classList.add('active');
+                        this.bricks[i].classList.add('active');
                     } else {
-                        brick.classList.remove('active');
+                        this.bricks[i].classList.remove('active');
                     }
-                });
+                }
             }
-            
+
             this.brickRAF = requestAnimationFrame(animate);
         };
-        
+
         this.brickRAF = requestAnimationFrame(animate);
     }
     
