@@ -67,17 +67,11 @@ setInterval(draw, 35); //default 35
 
 // Reference to the audio element
 const audio = document.getElementById("background-music");
-
-// Ensure the audio is playable on click
-function togglePlay() {
-    if (audio.paused) {
-        audio.play().catch(error => {
-            console.error("Playback failed:", error);
-        });
-    } else {
-        audio.pause();
-    }
+function startOrToggle(e) {
+  // allow toggle on click, but ensure play attempt on first gesture
+  if (audio.paused) audio.play().catch(err => console.error(err));
+  else audio.pause();
 }
-
-// Add event listener to the entire page to toggle play/pause on click
-document.body.addEventListener("click", togglePlay);
+document.addEventListener("pointerdown", startOrToggle, { once: false, passive: true });
+document.addEventListener("touchstart", startOrToggle, { passive: true });
+document.body.addEventListener("click", startOrToggle);
