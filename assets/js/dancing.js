@@ -30,6 +30,7 @@ class JazzDancer {
         this.audio.loop = true;
         this.audio.volume = 0.7;
         this.audio.crossOrigin = "anonymous";
+        this.audio.preload = 'metadata';
         
         // Web Audio API setup for real-time analysis
         this.audioContext = null;
