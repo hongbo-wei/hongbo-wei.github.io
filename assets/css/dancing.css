@@ -1281,6 +1281,20 @@ body {
     animation: ascii-glow 0.1s ease-in-out infinite alternate;
 }
 
+/* Large, visible loading message when JS adds the "loading-message" class */
+.ascii-display.loading-message {
+    font-size: 17px; /* larger for desktop */
+    line-height: 1.2;
+    color: #ff4081; /* high contrast on dark background */
+    text-shadow: 0 0 8px rgba(255, 64, 129, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    white-space: normal; /* allow wrapping for long messages */
+    text-align: center;
+}
+
 @keyframes ascii-glow {
     from {
         text-shadow: 0 0 5px rgba(255, 64, 129, 0.5); /* Pink glow */
@@ -1345,6 +1359,12 @@ body {
         justify-content: center;
         overflow: hidden;
     }
+
+    /* Smaller loading-message on tablets / phones */
+    .ascii-display.loading-message {
+        font-size: 22px;
+        padding: 0.8rem;
+    }
     
     .ascii-dancer-container {
         max-width: 100%;
@@ -1377,6 +1397,11 @@ body {
         max-height: 400px;
         line-height: 0.85;
         padding: 0.25rem;
+    }
+
+    .ascii-display.loading-message {
+        font-size: 18px;
+        padding: 0.6rem;
     }
     
     .ascii-dancer-container {
@@ -1450,7 +1475,7 @@ body {
 
 /* Initial state message */
 .ascii-display:empty::after {
-    content: "🎭 ASCII Dancer Ready\\A✨ Click 'Start Dancing' ✨\\A\\A🎵 Tap to Begin 🎵";
+    content: "🎭 ASCII Dancer Loading✨";
     white-space: pre;
     color: #888;
     font-size: 16px;
