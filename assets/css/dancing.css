@@ -1,0 +1,1525 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #1a1a1a;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px; /* Restore desktop width */
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.title-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    filter: brightness(0) saturate(100%);
+    transition: transform 0.3s ease;
+}
+
+.title-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.title-text {
+    display: inline;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #666;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.dancer-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Equal spacing between all three containers */
+    align-items: center;
+    gap: 3rem; /* Increased gap for more equal visual spacing */
+    order: 1;
+    justify-items: center; /* Center all items in their grid areas */
+}
+
+.dancer-silhouette {
+    position: relative;
+    width: 120px;
+    height: 260px;
+    background: none;
+    z-index: 2;
+    animation: dancerIdle 3s ease-in-out infinite;
+}
+
+.dancer-silhouette::before {
+    /* Head */
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 36px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.dancer-silhouette::after {
+    /* Neckline */
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background: #1a1a1a;
+    border-radius: 60% 60% 80% 80%;
+    z-index: 2;
+}
+
+.dancer-silhouette .hair {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: 38px;
+    height: 22px;
+    background: #1a1a1a;
+    border-radius: 60% 80% 80% 60%/80% 100% 100% 80%;
+    transform: translateX(-60%) rotate(-18deg) skew(-10deg, 2deg);
+    z-index: 4;
+    box-shadow: 8px 0 12px -4px #1a1a1a44;
+}
+
+.dancer-silhouette .body {
+    position: absolute;
+    top: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 70px;
+    background: #1a1a1a;
+    border-radius: 12px 12px 18px 18px/18px 18px 40px 40px;
+    z-index: 2;
+    box-shadow: 0 0 0 6px #fff inset;
+}
+
+.dancer-silhouette .waist {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 18px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.dancer-silhouette .arm.left {
+    position: absolute;
+    width: 16px;
+    height: 90px;
+    background: #1a1a1a;
+    border-radius: 12px 12px 18px 18px;
+    top: 56px;
+    left: 50%;
+    transform: rotate(-70deg) translate(-70px, -10px);
+    z-index: 1;
+}
+.dancer-silhouette .arm.right {
+    position: absolute;
+    width: 16px;
+    height: 70px;
+    background: #1a1a1a;
+    border-radius: 12px 12px 18px 18px;
+    top: 60px;
+    left: 50%;
+    transform: rotate(35deg) translate(10px, 0);
+    z-index: 1;
+}
+
+.dancer-silhouette .leg.left {
+    position: absolute;
+    width: 18px;
+    height: 100px;
+    background: #1a1a1a;
+    border-radius: 14px 14px 24px 24px;
+    top: 120px;
+    left: 50%;
+    transform: rotate(-10deg) translate(-18px, 0);
+    z-index: 1;
+}
+.dancer-silhouette .leg.right {
+    position: absolute;
+    width: 18px;
+    height: 110px;
+    background: #1a1a1a;
+    border-radius: 14px 14px 24px 24px;
+    top: 120px;
+    left: 50%;
+    transform: rotate(60deg) translate(30px, -30px) scaleY(0.7);
+    z-index: 0;
+}
+
+.dancer-silhouette .skirt {
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%) skew(-18deg, 6deg) rotate(-10deg);
+    width: 110px;
+    height: 70px;
+    background: #1a1a1a;
+    border-radius: 60% 120% 140% 40%/60% 100% 120% 80%;
+    z-index: 0;
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.10);
+    clip-path: polygon(0% 30%, 10% 60%, 20% 80%, 40% 100%, 60% 90%, 80% 100%, 100% 60%, 90% 20%, 60% 0%, 40% 10%);
+    opacity: 0.98;
+}
+.dancer-silhouette .skirt.layer {
+    background: #222;
+    top: 120px;
+    left: 50%;
+    width: 90px;
+    height: 50px;
+    border-radius: 60% 120% 140% 40%/60% 100% 120% 80%;
+    transform: translateX(-50%) skew(-10deg, 2deg) rotate(-6deg);
+    opacity: 0.7;
+    z-index: -1;
+    clip-path: polygon(0% 40%, 15% 70%, 30% 90%, 60% 100%, 80% 90%, 100% 60%, 90% 20%, 60% 0%, 40% 10%);
+}
+
+.music-bricks {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4px;
+    width: 220px;
+    height: 48px;
+    position: relative;
+    z-index: 1;
+}
+
+.music-bricks .brick {
+    width: 16px;
+    height: 16px;
+    background: #333;
+    border-radius: 3px;
+    transition: height 0.1s ease-out, background 0.2s ease, box-shadow 0.2s ease;
+    display: inline-block;
+    position: relative;
+}
+
+.music-bricks .brick.active {
+    background: #ff4081;
+    box-shadow: 0 0 4px rgba(255, 64, 129, 0.5);
+}
+
+/* Dance animations */
+@keyframes dancerIdle {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+@keyframes dancerJazz {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-20px) rotate(-15deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(-10px) rotate(10deg) scale(1.1);
+    }
+    75% {
+        transform: translateY(-30px) rotate(-5deg) scale(1.05);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+@keyframes dancerSpin {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-15px) rotate(360deg);
+    }
+}
+
+@keyframes dancerLeap {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-50px) scale(1.2);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* SVG Dance animations */
+.dancer-svg {
+    display: block;
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+    transform-origin: center bottom;
+}
+
+/* Jazz dance animation - elegant and flowing */
+.dancer-svg.dancing {
+    animation: svgJazzDance 3s ease-in-out infinite;
+}
+
+/* Spinning animation - graceful turns */  
+.dancer-svg.spinning {
+    animation: svgSpin 2s ease-in-out infinite;
+}
+
+/* Leaping animation - dramatic jumps */
+.dancer-svg.leaping {
+    animation: svgLeap 2.5s ease-in-out infinite;
+}
+
+/* Special entrance animation */
+@keyframes svgEntrance {
+    0% {
+        transform: translateY(50px) scale(0.8) rotate(-10deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-20px) scale(1.1) rotate(5deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Keyframes for SVG Jazz Dance */
+@keyframes svgJazzDance {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    15% {
+        transform: translateY(-15px) rotate(-8deg) scale(1.02);
+    }
+    30% {
+        transform: translateY(-5px) rotate(5deg) scale(1.05);
+    }
+    45% {
+        transform: translateY(-25px) rotate(-3deg) scale(1.03);
+    }
+    60% {
+        transform: translateY(-10px) rotate(8deg) scale(1.04);
+    }
+    75% {
+        transform: translateY(-20px) rotate(-5deg) scale(1.02);
+    }
+    90% {
+        transform: translateY(-8px) rotate(3deg) scale(1.01);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+/* Keyframes for SVG Spinning */
+@keyframes svgSpin {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-20px) rotate(-15deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(-30px) rotate(20deg) scale(1.1);
+    }
+    75% {
+        transform: translateY(-20px) rotate(-10deg) scale(1.05);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+/* Keyframes for SVG Leaping */
+@keyframes svgLeap {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+    20% {
+        transform: translateY(-30px) scale(1.1) rotate(-5deg);
+    }
+    40% {
+        transform: translateY(-60px) scale(1.15) rotate(3deg);
+    }
+    60% {
+        transform: translateY(-40px) scale(1.1)
+    }
+    80% {
+        transform: translateY(-10px) scale(1.05) rotate(1deg);
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    order: 2;
+}
+
+.control-btn {
+    padding: 12px 24px;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.control-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 26, 26, 0.2);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.control-btn.active {
+    background: #666;
+}
+
+.quote-section {
+    text-align: center;
+    max-width: 600px;
+    margin: 2rem 0;
+    order: 3;
+}
+
+.quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.quote-author {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 400;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Vinyl Player UI */
+.vinyl-player {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 350px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    border: 1px solid #333;
+    flex-shrink: 0;
+}
+
+.vinyl-player.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.vinyl-container {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vinyl-record {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #2a2a2a 30%, #1a1a1a 70%, #000 100%);
+    position: relative;
+    transition: transform 0.3s ease;
+    box-shadow: 
+        0 0 0 2px #333,
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.vinyl-record.spinning {
+    animation: vinylSpin 3s linear infinite;
+}
+
+@keyframes vinylSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.vinyl-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ff4081, #e91e63);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
+}
+
+.vinyl-hole {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #000;
+    position: absolute;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+.vinyl-label {
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    transform: rotate(0deg);
+    z-index: 1;
+}
+
+.song-title {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.artist-name {
+    font-size: 0.6rem;
+    opacity: 0.9;
+    letter-spacing: 0.3px;
+}
+
+.vinyl-grooves {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: repeating-conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(255, 255, 255, 0.03) 0.5deg,
+        transparent 1deg
+    );
+}
+
+.vinyl-grooves::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vinyl-grooves::after {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    right: 35px;
+    bottom: 35px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tonearm {
+    position: absolute;
+    top: -15px;
+    right: 30px;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #666, #999, #666);
+    border-radius: 2px;
+    transform-origin: 100% 50%;
+    transform: rotate(-25deg);
+    transition: transform 0.5s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tonearm.playing {
+    transform: rotate(-45deg);
+}
+
+.tonearm::before {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: -4px;
+    width: 12px;
+    height: 12px;
+    background: #ff4081;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(255, 64, 129, 0.3);
+}
+
+.player-controls {
+    color: white;
+}
+
+.song-info {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.current-song {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #ff4081;
+}
+
+.current-artist {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin: 0;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.time-current,
+.time-total {
+    font-size: 0.8rem;
+    color: #999;
+    font-weight: 500;
+    min-width: 35px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: #333;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    transition: height 0.2s ease;
+}
+
+.progress-bar:hover {
+    height: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff4081, #e91e63);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s ease;
+    position: relative;
+}
+
+.progress-handle {
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: #ff4081;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: 0 2px 4px rgba(255, 64, 129, 0.3);
+}
+
+.progress-bar:hover .progress-handle {
+    opacity: 1;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.player-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.player-btn:hover {
+    color: #ff4081;
+    background: rgba(255, 64, 129, 0.1);
+    transform: scale(1.1);
+}
+
+.player-btn.play-pause {
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(145deg, #ff4081, #e91e63);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
+}
+
+.player-btn.play-pause:hover {
+    background: linear-gradient(145deg, #e91e63, #c2185b);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(255, 64, 129, 0.4);
+}
+
+.volume-btn {
+    font-size: 1rem;
+}
+
+/* Music visualization container */
+.music-visualization {
+    position: relative;
+    width: 100%;
+    max-width: 280px; /* Smaller than ASCII dancer but bigger than music bricks */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.music-visualization.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.music-bricks {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4px;
+    width: 220px;
+    height: 48px;
+    position: relative;
+    z-index: 1;
+}
+
+.music-bricks .brick {
+    width: 16px;
+    height: 16px;
+    background: #333;
+    border-radius: 3px;
+    transition: height 0.1s ease-out, background 0.2s ease, box-shadow 0.2s ease;
+    display: inline-block;
+    position: relative;
+}
+
+.music-bricks .brick.active {
+    background: #ff4081;
+    box-shadow: 0 0 4px rgba(255, 64, 129, 0.5);
+}
+
+/* Dance animations */
+@keyframes dancerIdle {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+@keyframes dancerJazz {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-20px) rotate(-15deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(-10px) rotate(10deg) scale(1.1);
+    }
+    75% {
+        transform: translateY(-30px) rotate(-5deg) scale(1.05);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+@keyframes dancerSpin {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-15px) rotate(360deg);
+    }
+}
+
+@keyframes dancerLeap {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-50px) scale(1.2);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* SVG Dance animations */
+.dancer-svg {
+    display: block;
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+    transform-origin: center bottom;
+}
+
+/* Jazz dance animation - elegant and flowing */
+.dancer-svg.dancing {
+    animation: svgJazzDance 3s ease-in-out infinite;
+}
+
+/* Spinning animation - graceful turns */  
+.dancer-svg.spinning {
+    animation: svgSpin 2s ease-in-out infinite;
+}
+
+/* Leaping animation - dramatic jumps */
+.dancer-svg.leaping {
+    animation: svgLeap 2.5s ease-in-out infinite;
+}
+
+/* Special entrance animation */
+@keyframes svgEntrance {
+    0% {
+        transform: translateY(50px) scale(0.8) rotate(-10deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-20px) scale(1.1) rotate(5deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Keyframes for SVG Jazz Dance */
+@keyframes svgJazzDance {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    15% {
+        transform: translateY(-15px) rotate(-8deg) scale(1.02);
+    }
+    30% {
+        transform: translateY(-5px) rotate(5deg) scale(1.05);
+    }
+    45% {
+        transform: translateY(-25px) rotate(-3deg) scale(1.03);
+    }
+    60% {
+        transform: translateY(-10px) rotate(8deg) scale(1.04);
+    }
+    75% {
+        transform: translateY(-20px) rotate(-5deg) scale(1.02);
+    }
+    90% {
+        transform: translateY(-8px) rotate(3deg) scale(1.01);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+/* Keyframes for SVG Spinning */
+@keyframes svgSpin {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-20px) rotate(-15deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(-30px) rotate(20deg) scale(1.1);
+    }
+    75% {
+        transform: translateY(-20px) rotate(-10deg) scale(1.05);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+/* Keyframes for SVG Leaping */
+@keyframes svgLeap {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+    20% {
+        transform: translateY(-30px) scale(1.1) rotate(-5deg);
+    }
+    40% {
+        transform: translateY(-60px) scale(1.15) rotate(3deg);
+    }
+    60% {
+        transform: translateY(-40px) scale(1.1)
+    }
+    80% {
+        transform: translateY(-10px) scale(1.05) rotate(1deg);
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    order: 2;
+}
+
+.control-btn {
+    padding: 12px 24px;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.control-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 26, 26, 0.2);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.control-btn.active {
+    background: #666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .title {
+        font-size: 2.5rem;
+        gap: 0.3rem;
+    }
+    
+    .title-icon {
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+    
+    /* Move language switch button to very top right on mobile */
+    .lang-switch {
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 3px 6px;
+        font-size: 0.6rem;
+        z-index: 100;
+        border-radius: 0 0 0 8px;
+        box-shadow: 0 1px 3px rgba(255, 64, 129, 0.2);
+    }
+    
+    /* Reorder main sections on mobile */
+    .dancer-container {
+        order: 1;
+        display: flex !important;
+        grid-template-columns: none !important;
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: auto; /* Remove fixed viewport height */
+        gap: 1rem;
+        padding: 0;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .controls {
+        order: 2;
+        margin-top: 0.5rem;
+    }
+    
+    .quote-section {
+        order: 3;
+        margin-top: 0.5rem;
+    }
+    
+    /* Within dancer-container, show ASCII dancer first */
+    .ascii-dancer-container {
+        max-width: 100%;
+        width: 100%;
+        order: 1;
+        min-height: 400px; /* Fixed height instead of viewport */
+        max-height: 450px;
+        margin-bottom: 1rem;
+        flex-shrink: 0; /* Prevent shrinking */
+    }
+    
+    .vinyl-player {
+        max-width: 100%;
+        width: 80%;
+        order: 3;
+        display: none !important; /* Hide by default on mobile */
+        padding: 1rem;
+    }
+    
+    .vinyl-player.active {
+        display: block !important; /* Show when active */
+    }
+    
+    .music-visualization {
+        max-width: 100%;
+        width: 100%;
+        order: 4;
+        display: none !important; /* Hide by default on mobile */
+    }
+    
+    .music-visualization.active {
+        display: flex !important; /* Show when active */
+    }
+    
+    .dancer-svg {
+        max-width: 220px;
+        width: 100%;
+    }
+    
+    
+    .music-bricks {
+        width: 180px;
+        height: 40px;
+        gap: 3px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+        margin-top: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .control-btn {
+        width: 250px;
+        padding: 12px 20px;
+        font-size: 1rem;
+        border-radius: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .control-btn:active {
+        transform: scale(0.98);
+    }
+    
+    /* Responsive vinyl player */
+    .vinyl-container {
+        width: 180px;
+        height: 180px;
+        margin-bottom: 1.2rem;
+    }
+    
+    .vinyl-record {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .vinyl-center {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .vinyl-label {
+        font-size: 0.65rem;
+    }
+    
+    .song-title {
+        font-size: 0.7rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .artist-name {
+        font-size: 0.55rem;
+    }
+    
+    .tonearm {
+        width: 90px;
+        right: 25px;
+        top: -12px;
+    }
+    
+    .player-controls {
+        margin: 0;
+    }
+    
+    .song-info {
+        margin-bottom: 0.8rem;
+    }
+    
+    .current-song {
+        font-size: 0.9rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .current-artist {
+        font-size: 0.7rem;
+    }
+    
+    .progress-container {
+        margin-bottom: 0.8rem;
+        gap: 0.4rem;
+    }
+    
+    .time-current,
+    .time-total {
+        font-size: 0.7rem;
+        min-width: 30px;
+    }
+    
+    .control-buttons {
+        gap: 0.5rem;
+    }
+    
+    .player-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+    
+    .player-btn.play-pause {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Particle effects for extra magic */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 3s ease-out forwards;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(0);
+    }
+}
+
+/* ASCII Dancer Styles */
+.ascii-dancer-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px; /* Made larger than vinyl player (350px) */
+    margin: 0 auto 1rem;
+    background: #0a0a0a;
+    border-radius: 12px;
+    padding: 0.1rem; /* Increased padding for taller appearance */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid #333;
+    overflow: hidden;
+}
+
+.ascii-display {
+    font-family: 'Courier New', monospace;
+    font-size: 6px; /* Better for desktop viewing */
+    line-height: 0.9;
+    color: #ff4081; /* Changed to pink */
+    text-shadow: 0 0 5px rgba(255, 64, 129, 0.5); /* Pink glow */
+    white-space: pre;
+    margin: 0;
+    text-align: center;
+    height: 100%;
+    min-height: 450px; /* Made taller for better ASCII display */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow: hidden;
+}
+
+.ascii-display.dancing {
+    animation: ascii-glow 0.1s ease-in-out infinite alternate;
+}
+
+/* Large, visible loading message when JS adds the "loading-message" class */
+.ascii-display.loading-message {
+    font-size: 17px; /* larger for desktop */
+    line-height: 1.2;
+    color: #ff4081; /* high contrast on dark background */
+    text-shadow: 0 0 8px rgba(255, 64, 129, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    white-space: normal; /* allow wrapping for long messages */
+    text-align: center;
+}
+
+@keyframes ascii-glow {
+    from {
+        text-shadow: 0 0 5px rgba(255, 64, 129, 0.5); /* Pink glow */
+    }
+    to {
+        text-shadow: 0 0 10px rgba(255, 64, 129, 0.8), 0 0 20px rgba(255, 64, 129, 0.3); /* Pink glow */
+    }
+}
+
+@keyframes ascii-special-glow {
+    0% {
+        text-shadow: 0 0 5px rgba(255, 64, 129, 0.5); /* Pink glow */
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(255, 64, 129, 0.8), 0 0 40px rgba(255, 64, 129, 0.4);
+        transform: scale(1.05);
+    }
+    100% {
+        text-shadow: 0 0 5px rgba(255, 64, 129, 0.5); /* Pink glow */
+        transform: scale(1);
+    }
+}
+
+@keyframes ascii-entrance {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Responsive ASCII display - mobile overrides */
+@media (max-width: 768px) {
+    .container {
+        max-width: 80%;
+        padding: 0.5rem;
+        min-height: 100vh;
+    }
+    
+    .main-content {
+        padding: 0;
+        margin: 0;
+        min-height: 85vh;
+        gap: 1rem;
+    }
+    
+    .ascii-display {
+        font-size: 8px;
+        min-height: 400px; /* Fixed height instead of viewport */
+        line-height: 0.9;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    /* Smaller loading-message on tablets / phones */
+    .ascii-display.loading-message {
+        font-size: 22px;
+        padding: 0.8rem;
+    }
+    
+    .ascii-dancer-container {
+        max-width: 100%;
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0 auto 1rem;
+        min-height: 400px; /* Fixed height to match display */
+        max-height: 450px; /* Prevent excessive height */
+        border-radius: 8px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .header {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0.25rem;
+    }
+    
+    .ascii-display {
+        font-size: 7px;
+        min-height: 350px; /* Smaller fixed height */
+        max-height: 400px;
+        line-height: 0.85;
+        padding: 0.25rem;
+    }
+
+    .ascii-display.loading-message {
+        font-size: 18px;
+        padding: 0.6rem;
+    }
+    
+    .ascii-dancer-container {
+        padding: 0.25rem;
+        max-width: 100%;
+        width: 100%;
+        min-height: 350px; /* Match display height */
+        max-height: 400px;
+        margin: 0 auto 0.5rem;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+        gap: 0.2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .title-icon {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+    
+    .header {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* iPhone specific optimizations */
+@media (max-width: 390px) {
+    .container {
+        padding: 0.25rem;
+        min-height: 100vh;
+    }
+    
+    .main-content {
+        min-height: 90vh;
+        gap: 0.5rem;
+    }
+    
+    .ascii-display {
+        font-size: 6px;
+        min-height: 320px; /* Compact but readable */
+        max-height: 360px;
+        line-height: 0.8;
+        padding: 0.25rem;
+    }
+    
+    .ascii-dancer-container {
+        padding: 0.25rem;
+        min-height: 320px;
+        max-height: 360px;
+        margin: 0 auto 0.5rem;
+        border-radius: 6px;
+    }
+    
+    .title {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .controls {
+        margin-top: 0.5rem;
+    }
+    
+    .control-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        width: 180px;
+    }
+}
+
+/* Initial state message */
+.ascii-display:empty::after {
+    content: "🎭 ASCII Dancer Loading✨";
+    white-space: pre;
+    color: #888;
+    font-size: 16px;
+    text-align: center;
+    text-shadow: none;
+    line-height: 1.4;
+}
+
+/* Mobile specific initial message */
+@media (max-width: 768px) {
+    .ascii-display:empty::after {
+        font-size: 14px;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 480px) {
+    .ascii-display:empty::after {
+        font-size: 12px;
+        line-height: 1.2;
+    }
+}
+
+/* Language Switch Button */
+.lang-switch {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(145deg, #ff4081, #e91e63);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 64, 129, 0.3);
+    z-index: 100;
+}
+
+.lang-switch:hover {
+    background: linear-gradient(145deg, #e91e63, #c2185b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.4);
+}

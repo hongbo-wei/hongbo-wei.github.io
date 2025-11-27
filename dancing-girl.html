@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jazz Dancer - Alive in Motion</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/dancing/her.svg">
+    <link rel="alternate icon" href="assets/img/favicon_io/favicon.ico">
+    <link rel="stylesheet" href="assets/css/dancing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title" id="mainTitle">
+                <img src="assets/img/dancing/her.svg" alt="Dancer" class="title-icon">
+                <span class="title-text">Jazz Dancer</span>
+            </h1>
+            <p class="subtitle" id="mainSubtitle">Alive in Motion</p>
+            <button class="lang-switch" id="langSwitch">中文</button>
+        </header>
+        
+        <main class="main-content">
+            <div class="dancer-container">
+                <!-- Vinyl Player UI -->
+                <div class="vinyl-player" id="vinylPlayer">
+                    <div class="vinyl-container">
+                        <div class="vinyl-record" id="vinylRecord">
+                            <div class="vinyl-center">
+                                <div class="vinyl-hole"></div>
+                                <div class="vinyl-label">
+                                    <div class="song-title">O Children</div>
+                                    <div class="artist-name">Nick Cave & The Bad Seeds</div>
+                                </div>
+                            </div>
+                            <div class="vinyl-grooves"></div>
+                        </div>
+                        <div class="tonearm" id="tonearm"></div>
+                    </div>
+                    
+                    <div class="player-controls">
+                        <div class="song-info">
+                            <h3 class="current-song">O Children</h3>
+                            <p class="current-artist">Nick Cave & The Bad Seeds</p>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <span class="time-current" id="currentTime">0:00</span>
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                                <div class="progress-handle" id="progressHandle"></div>
+                            </div>
+                            <span class="time-total" id="totalTime">0:00</span>
+                        </div>
+                        
+                        <div class="control-buttons">
+                            <button class="player-btn" id="prevBtn">⏮</button>
+                            <button class="player-btn play-pause" id="playerPlayBtn">▶</button>
+                            <button class="player-btn" id="nextBtn">⏭</button>
+                            <button class="player-btn volume-btn" id="volumeBtn">🔊</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ASCII Dancer -->
+                <div class="ascii-dancer-container" id="asciiDancerContainer">
+                    <pre class="ascii-display" id="asciiDisplay"></pre>
+                    <div class="dance-floor"></div>
+                </div>
+                
+                <!-- Music visualization -->
+                <div class="music-visualization">
+                    <div class="music-bricks" id="musicBricks"></div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" id="playBtn">Play Music</button>
+                <button class="control-btn" id="danceBtn">Start Dancing</button>
+                <button class="control-btn" id="resetBtn">Reset</button>
+            </div>
+            
+            <div class="quote-section">
+                <blockquote class="quote">
+                    "Dance is the hidden language of the soul."
+                </blockquote>
+                <cite class="quote-author">- Martha Graham</cite>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>Created with love for the dancer who feels alive in motion</p>
+        </footer>
+    </div>
+    
+    <script src="assets/js/dancing.js"></script>
+</body>
+</html> 
