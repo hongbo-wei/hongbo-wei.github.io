@@ -1102,7 +1102,7 @@ body {
     .music-visualization {
         max-width: 100%;
         width: 100%;
-        order: 4;
+        order: 2;
         display: none !important; /* Hide by default on mobile */
     }
     
