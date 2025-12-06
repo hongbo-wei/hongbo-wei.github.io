@@ -1351,7 +1351,7 @@ body {
     
     .ascii-display {
         font-size: 8px;
-        min-height: 400px; /* Fixed height instead of viewport */
+        min-height: 460px; /* Slightly taller on mobile for better readability */
         line-height: 0.9;
         padding: 0.5rem;
         display: flex;
@@ -1371,8 +1371,8 @@ body {
         width: 100%;
         padding: 0.5rem;
         margin: 0 auto 1rem;
-        min-height: 400px; /* Fixed height to match display */
-        max-height: 450px; /* Prevent excessive height */
+        min-height: 460px; /* Match taller display */
+        max-height: 520px; /* Allow a bit more breathing room */
         border-radius: 8px;
     }
     
@@ -1393,8 +1393,8 @@ body {
     
     .ascii-display {
         font-size: 7px;
-        min-height: 350px; /* Smaller fixed height */
-        max-height: 400px;
+        min-height: 380px; /* Slightly taller on small phones */
+        max-height: 440px;
         line-height: 0.85;
         padding: 0.25rem;
     }
@@ -1408,8 +1408,8 @@ body {
         padding: 0.25rem;
         max-width: 100%;
         width: 100%;
-        min-height: 350px; /* Match display height */
-        max-height: 400px;
+        min-height: 380px; /* Match taller display */
+        max-height: 440px;
         margin: 0 auto 0.5rem;
     }
     
