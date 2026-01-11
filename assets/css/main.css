@@ -774,7 +774,8 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     background-color: transparent;
-    border: none
+    border: none;
+    z-index: 1;
 }
 
 .intro--banner button .btn-background {
@@ -808,13 +809,14 @@ body {
     position: absolute;
     bottom: 21px;
     right: -12px;
+    z-index: 0;
 }
 
 .intro--banner .intro-image .intro-img {
     position: absolute;
     bottom: 37px;
     right: 67px;
-    z-index: 2;
+    z-index: 0;
 }
 
 /* .intro--banner .intro-image .intro-circle {
@@ -2010,6 +2012,8 @@ a {
     margin: 0px 0 0px;
     font-size: 18px;
     color: var(--muted);
+    position: relative;
+    z-index: 1;
 }
 
 .intro-meta {
@@ -2017,6 +2021,8 @@ a {
     flex-wrap: wrap;
     gap: 10px;
     margin: 12px 0 16px;
+    position: relative;
+    z-index: 1;
 }
 
 .meta-pill {
@@ -2032,6 +2038,8 @@ a {
     margin: 6px 0 20px;
     color: var(--text);
     font-weight: 600;
+    position: relative;
+    z-index: 1;
 }
 
 .intro--banner::after {
