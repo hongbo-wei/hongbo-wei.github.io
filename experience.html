@@ -9,7 +9,15 @@
     <meta name="description" content="I'm a technophile and lifelong learner">
     <meta name="keywords" content="ai engineer, artificial intelligence, computer science, cplusplus, data analysis, full-stack developer, java, machine learning, machine learning engineer, programming, python, software developer, software engineer, web development">
     <meta name="author" content="Hongbo Wei">
-    <link rel="stylesheet" href="assets/css/main.min.css">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0c0c0c">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Hongbo Wei">
+
+    <link rel="stylesheet" href="assets/css/main.min.css">>
     <link rel="stylesheet" href="assets/css/critical.css">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_io/favicon-32x32.png">
@@ -141,6 +149,13 @@
     </div>
 
     <script src="assets/js/app.min.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
 </body>
 
 </html>
