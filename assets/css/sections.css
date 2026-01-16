@@ -305,6 +305,15 @@
     color: var(--text);
 }
 
+.past-experience {
+    text-align: center;
+}
+
+.past-experience h4,
+.past-experience p {
+    text-align: center;
+}
+
 .section-lead {
     max-width: 720px;
     margin: 0 auto 28px;
