@@ -326,7 +326,7 @@
         }
 
         // Keyboard navigation
-        document.addEventListener('keyup', function(e) {
+        document.addEventListener('keydown', function(e) {
             if (hasClass(outerNav, 'is-vis')) return;
 
             if (e.keyCode === 40) { // Down arrow
