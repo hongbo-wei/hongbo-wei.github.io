@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build:css": "npx lightningcss-cli --minify --bundle assets/css/main.css -o assets/css/main.min.css",
-    "build": "npm run build:css"
+    "build:js": "npx terser assets/js/app.js -o assets/js/app.min.js --compress --mangle",
+    "build": "npm run build:css && npm run build:js"
   },
   "keywords": ["portfolio", "personal-website"],
   "author": "Hongbo Wei",
