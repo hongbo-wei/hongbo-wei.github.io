@@ -4,11 +4,24 @@
   "description": "Hongbo Wei's personal portfolio website",
   "private": true,
   "scripts": {
-    "build:css": "npx lightningcss-cli --minify --bundle assets/css/main.css -o assets/css/main.min.css",
-    "build:js": "npx terser assets/js/app.js -o assets/js/app.min.js --compress --mangle",
-    "build": "npm run build:css && npm run build:js"
+    "build:css": "lightningcss --minify --bundle assets/css/main.css -o assets/css/main.min.css",
+    "build:js": "terser assets/js/app.js -o assets/js/app.min.js --compress --mangle",
+    "build": "npm run build:css && npm run build:js",
+    "watch:css": "chokidar \"assets/css/**/*.css\" \"assets/css/**/*.sass\" \"assets/css/**/*.scss\" -c \"npm run build:css\" --initial",
+    "watch:js": "chokidar \"assets/js/app.js\" -c \"npm run build:js\" --initial",
+    "watch": "npm-run-all --parallel watch:*",
+    "serve": "browser-sync start --server --files \"*.html\" \"assets/css/main.min.css\" \"assets/js/app.min.js\" --no-notify",
+    "dev": "npm-run-all --parallel watch serve",
+    "start": "npm run dev"
   },
   "keywords": ["portfolio", "personal-website"],
   "author": "Hongbo Wei",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^3.0.2",
+    "chokidar-cli": "^3.0.0",
+    "lightningcss-cli": "^1.28.2",
+    "npm-run-all": "^4.1.5",
+    "terser": "^5.37.0"
+  }
 }
