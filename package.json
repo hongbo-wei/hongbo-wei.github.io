@@ -1,0 +1,13 @@
+{
+  "name": "hongbo-wei-portfolio",
+  "version": "1.0.0",
+  "description": "Hongbo Wei's personal portfolio website",
+  "private": true,
+  "scripts": {
+    "build:css": "npx lightningcss-cli --minify --bundle assets/css/main.css -o assets/css/main.min.css",
+    "build": "npm run build:css"
+  },
+  "keywords": ["portfolio", "personal-website"],
+  "author": "Hongbo Wei",
+  "license": "MIT"
+}
