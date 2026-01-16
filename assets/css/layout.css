@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Layout Styles - Grid, Viewport, Wrapper, Sections, Perspective
+   ========================================================================== */
+
+.l-viewport {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100svh;
+    box-shadow: 0 0 45px 5px rgba(0, 0, 0, 0.85);
+    overflow: hidden
+}
+
+.l-wrapper {
+    position: relative;
+    width: 1440px;
+    max-width: 90%;
+    height: 100%;
+    margin: 0 auto
+}
+
+.l-side-nav {
+    position: absolute;
+    left: 0;
+    display: flex;
+    height: 100%;
+    align-items: center
+}
+
+.l-side-nav::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 70%;
+    max-height: 750px;
+    background-color: #555;
+    opacity: .35;
+    z-index: 10
+}
+
+@media (max-width: 1180px) {
+    .l-side-nav {
+        display: none
+    }
+}
+
+.l-main-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.l-section {
+    position: absolute;
+    width: 100%;
+    height: 100%
+}
+
+/* Section Transitions */
+.section {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s ease-in-out, visibility 0s .4s
+}
+
+.section--is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+    transition: opacity .4s ease-in-out .4s
+}
+
+.section--next {
+    transform: translateY(-45px);
+    transition: transform .4s ease-in-out
+}
+
+.section--prev {
+    transform: translateY(45px);
+    transition: transform .4s ease-in-out
+}
+
+/* Perspective & Container */
+.perspective {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+.perspective,
+.perspective--modalview {
+    background: radial-gradient(120% 120% at 15% 20%, #0d1531 0, var(--bg) 48%, #02040a 100%);
+}
+
+.perspective--modalview {
+    position: fixed;
+    perspective: 1500px
+}
+
+.container {
+    position: relative;
+    transform: translateZ(0) translateX(0) rotateY(0deg);
+    min-height: 100%;
+    outline: 30px solid #0f33ff;
+    transition: transform .4s
+}
+
+.modalview .container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    backface-visibility: hidden
+}
+
+.effect-rotate-left .container {
+    transform-origin: 0% 50%;
+    transition: transform .4s
+}
+
+.effect-rotate-left--animate .container {
+    transform: translateZ(-1800px) translateX(-50%) rotateY(45deg);
+    outline: 30px solid #0f33ff
+}
+
+/* Utility Classes */
+.space {
+    padding: 50px 0;
+}
