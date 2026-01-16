@@ -553,7 +553,10 @@ body {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
-    cursor: pointer
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0
 }
 
 .header--nav-toggle span,
@@ -1125,7 +1128,9 @@ body {
     justify-content: center;
     background-color: #282828;
     border-radius: 50%;
-    cursor: pointer
+    cursor: pointer;
+    border: 0;
+    padding: 0
 }
 
 .slider--prev:hover, .slider--next:hover {
@@ -1881,6 +1886,9 @@ body {
     height: 100%;
     display: none;
     cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
     z-index: 11
 }
 
