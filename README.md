@@ -6,6 +6,9 @@ Interactive portfolio with supporting pages (experience, matrix demo, visitor ma
 - Open `index.html` directly, or serve the repo root: `python -m http.server 8000`.
 - Key pages: `index.html` (home), `experience.html` (work/skills), `matrix.html` (matrix effect demo), `map.html` (visitor map fallback), `404.html`.
 
+## Lint
+- CI runs HTMLHint on `*.html`. Run locally: `npx --yes htmlhint@1.1.4 *.html -c .htmlhintrc`.
+
 ## Structure
 - Styles: `assets/css/main.sass` entrypoint importing Sass partials under `assets/css/base`, `assets/css/layouts`, and `assets/css/modules/`; compiled output lives at `assets/css/main.css`. Matrix page uses `assets/css/matrix.css`.
 - Scripts: `assets/js/script.js` (navigation, slider, map fallback), `assets/js/matrix.js`, vendor libs in `assets/js/vendor/`.
