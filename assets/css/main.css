@@ -1,5 +1,5 @@
 /* from newcss.css 合并优化 */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;600&display=swap');
+/* Fonts: Using local Montserrat only. Space Grotesk removed to reduce HTTP requests. */
 .contact:before {
     content: "";
     position: absolute;
@@ -1982,7 +1982,7 @@ body {
 }
 
 body {
-    font-family: 'Space Grotesk', 'Montserrat', sans-serif;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: radial-gradient(120% 120% at 15% 20%, #0d1531 0, var(--bg) 48%, #02040a 100%);
     color: var(--text);
     font-size: 14px;
