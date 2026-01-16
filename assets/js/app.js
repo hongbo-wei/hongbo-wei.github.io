@@ -3,42 +3,118 @@
  * Converted from jQuery to reduce ~85KB dependency
  */
 
-(function() {
-    'use strict';
-
+// Utility functions (exported for testing)
+const AppUtils = {
     // DOM Ready helper
-    function ready(fn) {
+    ready: function(fn) {
         if (document.readyState !== 'loading') {
             fn();
         } else {
             document.addEventListener('DOMContentLoaded', fn);
         }
-    }
+    },
 
-    // Helper functions
-    function $(selector, context) {
+    // Query selector helper
+    $: function(selector, context) {
         return (context || document).querySelector(selector);
-    }
+    },
 
-    function $$(selector, context) {
+    // Query selector all helper
+    $$: function(selector, context) {
         return Array.from((context || document).querySelectorAll(selector));
-    }
+    },
 
-    function addClass(el, className) {
+    // Add class to element
+    addClass: function(el, className) {
         if (el) el.classList.add(className);
-    }
+    },
 
-    function removeClass(el, className) {
+    // Remove class from element
+    removeClass: function(el, className) {
         if (el) el.classList.remove(className);
-    }
+    },
 
-    function hasClass(el, className) {
+    // Check if element has class
+    hasClass: function(el, className) {
         return el ? el.classList.contains(className) : false;
-    }
+    },
 
-    function getIndex(el) {
+    // Get index of element among siblings
+    getIndex: function(el) {
+        if (!el || !el.parentNode) return -1;
         return Array.from(el.parentNode.children).indexOf(el);
+    },
+
+    // Calculate target index for navigation
+    calculateTargetIndex: function(currentIndex, maxIndex, direction) {
+        if (direction === 'down' || direction === 1) {
+            return currentIndex !== maxIndex ? currentIndex + 1 : 0;
+        } else if (direction === 'up' || direction === -1) {
+            return currentIndex !== 0 ? currentIndex - 1 : maxIndex;
+        }
+        return currentIndex;
+    },
+
+    // Calculate slider positions with wrap-around
+    calculateSliderPositions: function(centerId, numProjects, direction) {
+        const wrap = (val) => {
+            if (val < 0) return numProjects - 1;
+            if (val >= numProjects) return 0;
+            return val;
+        };
+
+        return {
+            center: wrap(centerId + direction),
+            left: wrap((centerId === 0 ? numProjects - 1 : centerId - 1) + direction),
+            right: wrap((centerId === numProjects - 1 ? 0 : centerId + 1) + direction)
+        };
+    },
+
+    // Determine transition class based on navigation direction
+    getTransitionClass: function(fromIndex, toIndex, maxIndex) {
+        // No transition for wrap-around
+        if ((fromIndex === maxIndex && toIndex === 0) || (fromIndex === 0 && toIndex === maxIndex)) {
+            return null;
+        }
+        return toIndex > fromIndex ? 'section--next' : 'section--prev';
+    },
+
+    // Check if CTA should be visible
+    shouldShowCta: function(toIndex, maxIndex) {
+        return toIndex !== 0 && toIndex !== maxIndex;
+    },
+
+    // Parse wheel delta from event
+    parseWheelDelta: function(e) {
+        return e.wheelDelta ? -e.wheelDelta : (e.deltaY || 20 * (e.detail || 0));
+    },
+
+    // Detect swipe gesture
+    detectSwipe: function(startY, endY, startX, endX, startTime, endTime) {
+        const deltaY = startY - endY;
+        const deltaX = startX - endX;
+        const deltaTime = endTime - startTime;
+
+        // Require: vertical swipe > 50px, faster than 300ms, more vertical than horizontal
+        if (Math.abs(deltaY) > 50 && deltaTime < 300 && Math.abs(deltaY) > Math.abs(deltaX)) {
+            return deltaY > 0 ? 'down' : 'up';
+        }
+        return null;
     }
+};
+
+// Skip app initialization in test environment
+var _isTestEnvironment = typeof module !== 'undefined' && module.exports && typeof jest !== 'undefined';
+
+if (!_isTestEnvironment) {
+
+// Main app initialization
+(function() {
+    'use strict';
+
+    const { ready, $, $$, addClass, removeClass, hasClass, getIndex, 
+            calculateTargetIndex, getTransitionClass, shouldShowCta,
+            parseWheelDelta, detectSwipe, calculateSliderPositions } = AppUtils;
 
     function fadeIn(el, duration) {
         el.style.opacity = 0;
@@ -61,18 +137,15 @@
         const outerNavReturn = $('.outer-nav--return');
         const viewport = document.getElementById('viewport');
 
+        // Skip initialization if required DOM elements are missing
+        if (!sideNav || !mainContent) return;
+
         // Navigate by direction (scroll/swipe/keyboard)
         function navigateByDirection(direction) {
             const activeNav = $('.is-active', sideNav);
             const currentIndex = getIndex(activeNav);
             const maxIndex = sideNav.children.length - 1;
-            let targetIndex = 0;
-
-            if (direction === 'down' || direction === 1) {
-                targetIndex = currentIndex !== maxIndex ? currentIndex + 1 : 0;
-            } else if (direction === 'up' || direction === -1) {
-                targetIndex = currentIndex !== 0 ? currentIndex - 1 : maxIndex;
-            }
+            const targetIndex = calculateTargetIndex(currentIndex, maxIndex, direction);
 
             updateNavigation(targetIndex);
             updateSections(currentIndex, targetIndex, maxIndex);
@@ -100,8 +173,8 @@
             addClass(mainContent.children[toIndex], 'section--is-active');
 
             // Add transition classes
-            if (!((fromIndex === maxIndex && toIndex === 0) || (fromIndex === 0 && toIndex === maxIndex))) {
-                const transitionClass = toIndex > fromIndex ? 'section--next' : 'section--prev';
+            const transitionClass = getTransitionClass(fromIndex, toIndex, maxIndex);
+            if (transitionClass) {
                 const fromSection = mainContent.children[fromIndex];
                 if (fromSection) {
                     Array.from(fromSection.children).forEach(child => addClass(child, transitionClass));
@@ -109,7 +182,7 @@
             }
 
             // Toggle header CTA visibility
-            if (toIndex !== 0 && toIndex !== maxIndex) {
+            if (shouldShowCta(toIndex, maxIndex)) {
                 addClass(headerCta, 'is-active');
             } else {
                 removeClass(headerCta, 'is-active');
@@ -157,36 +230,23 @@
 
                     for (let i = 0; i < numProjects; i++) {
                         if (hasClass(allProjects[i], 'slider--item-center')) {
-                            const oldCenterId = i;
-                            const oldLeftId = i === 0 ? numProjects - 1 : i - 1;
-                            const oldRightId = i === numProjects - 1 ? 0 : i + 1;
+                            const positions = calculateSliderPositions(i, numProjects, direction);
 
                             // Remove old positions
-                            removeClass(allProjects[oldCenterId], 'slider--item-center');
+                            removeClass(allProjects[i], 'slider--item-center');
+                            const oldLeftId = i === 0 ? numProjects - 1 : i - 1;
+                            const oldRightId = i === numProjects - 1 ? 0 : i + 1;
                             removeClass(allProjects[oldLeftId], 'slider--item-left');
                             removeClass(allProjects[oldRightId], 'slider--item-right');
                             allProjects.forEach(p => addClass(p, 'slider--item-hidden'));
 
-                            // Calculate new positions
-                            let newCenterId = oldCenterId + direction;
-                            if (newCenterId < 0) newCenterId = numProjects - 1;
-                            else if (newCenterId >= numProjects) newCenterId = 0;
-
-                            let newLeftId = oldLeftId + direction;
-                            if (newLeftId < 0) newLeftId = numProjects - 1;
-                            else if (newLeftId >= numProjects) newLeftId = 0;
-
-                            let newRightId = oldRightId + direction;
-                            if (newRightId < 0) newRightId = numProjects - 1;
-                            else if (newRightId >= numProjects) newRightId = 0;
-
                             // Apply new positions
-                            removeClass(allProjects[newCenterId], 'slider--item-hidden');
-                            addClass(allProjects[newCenterId], 'slider--item-center');
-                            removeClass(allProjects[newLeftId], 'slider--item-hidden');
-                            addClass(allProjects[newLeftId], 'slider--item-left');
-                            removeClass(allProjects[newRightId], 'slider--item-hidden');
-                            addClass(allProjects[newRightId], 'slider--item-right');
+                            removeClass(allProjects[positions.center], 'slider--item-hidden');
+                            addClass(allProjects[positions.center], 'slider--item-center');
+                            removeClass(allProjects[positions.left], 'slider--item-hidden');
+                            addClass(allProjects[positions.left], 'slider--item-left');
+                            removeClass(allProjects[positions.right], 'slider--item-hidden');
+                            addClass(allProjects[positions.right], 'slider--item-right');
 
                             break;
                         }
@@ -198,6 +258,25 @@
 
             prevBtn.addEventListener('click', () => slide(-1));
             nextBtn.addEventListener('click', () => slide(1));
+
+            // Keyboard arrow navigation for slider
+            document.addEventListener('keydown', function(e) {
+                // Only trigger when Projects section (index 1) is active
+                const activeNav = $('.is-active', sideNav);
+                if (getIndex(activeNav) !== 1) return;
+                
+                // Don't interfere with nav menu or input fields
+                if (hasClass(outerNav, 'is-vis')) return;
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                if (e.keyCode === 37) { // Left arrow
+                    e.preventDefault();
+                    slide(-1);
+                } else if (e.keyCode === 39) { // Right arrow
+                    e.preventDefault();
+                    slide(1);
+                }
+            });
         }
 
         // Form input labels
@@ -246,7 +325,7 @@
 
             if (e.cancelable) e.preventDefault();
 
-            const delta = e.wheelDelta ? -e.wheelDelta : (e.deltaY || 20 * (e.detail || 0));
+            const delta = parseWheelDelta(e);
 
             if (delta > 50 && wheelThrottled) {
                 wheelThrottled = false;
@@ -310,17 +389,10 @@
 
                 const touchEndY = e.changedTouches[0].clientY;
                 const touchEndX = e.changedTouches[0].clientX;
-                const deltaY = touchStartY - touchEndY;
-                const deltaX = touchStartX - touchEndX;
-                const deltaTime = Date.now() - touchStartTime;
+                const swipeDirection = detectSwipe(touchStartY, touchEndY, touchStartX, touchEndX, touchStartTime, Date.now());
 
-                // Require: vertical swipe > 50px, faster than 300ms, more vertical than horizontal
-                if (Math.abs(deltaY) > 50 && deltaTime < 300 && Math.abs(deltaY) > Math.abs(deltaX)) {
-                    if (deltaY > 0) {
-                        navigateByDirection('down'); // Swipe up = go down
-                    } else {
-                        navigateByDirection('up'); // Swipe down = go up
-                    }
+                if (swipeDirection) {
+                    navigateByDirection(swipeDirection);
                 }
             }, { passive: true });
         }
@@ -395,3 +467,10 @@
         }
     });
 })();
+
+} // End of browser environment check
+
+// Export for testing (CommonJS/Node.js environment)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = AppUtils;
+}
