@@ -1,0 +1,75 @@
+// position fixed in order to escape the 1440px wrapper
+.contact
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background:
+    image: url("../img/dubai.webp")
+    position: center
+    size: cover
+    repeat: no-repeat
+
+  &--lockup
+    position: relative
+    display: flex
+    width: 100%
+    height: 100%
+    align-items: center
+    justify-content: flex-end
+    padding-right: 5%
+
+    @media (max-width: 767px)
+      justify-content: center
+      padding-right: 0
+
+    .modal
+      padding: 45px 45px
+      text-align: center
+      background-color: rgba(0, 0, 0, 0.12)
+      box-shadow: 0 0 30px 0 rgba(0,0,0,.75)
+
+      &--information
+
+        p,
+        a
+          display: block
+          margin: 14px 0
+          text-decoration: none
+          color: $white
+          font-weight: 700
+
+        p
+          margin-top: 0
+
+      &--options
+        margin: 0
+        padding: 0
+        list-style: none
+
+        & > li
+          width: 130px
+          margin: 0 auto 25px auto
+
+        li:nth-child(1)
+          background-color: #ff0080
+
+        li:nth-child(2)
+          background-color: #000000
+
+        li:nth-child(3)
+          background-color: #0A66C2
+
+        li:nth-child(4)
+          margin-bottom: 0
+          background-color: #15a051
+          text-transform: uppercase
+
+        a
+          display: block
+          width: 100%
+          padding: 8px 0
+          text-decoration: none
+          color: $white
+          font-weight: 700

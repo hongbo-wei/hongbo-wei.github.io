@@ -1,0 +1,61 @@
+// position fixed in order to escape the 1440px wrapper
+.traffic
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background:
+    image: url("../img/about-visual.png")
+    position: center
+    size: cover
+    repeat: no-repeat
+
+  &--lockup
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    width: 100%
+    height: 100%
+    padding-top: 80px
+    box-sizing: border-box
+
+    @media (max-width: 767px)
+      padding-top: 60px
+
+    h2
+      color: $white
+      font-size: 36px
+      font-weight: 700
+      text-align: center
+      margin: 0 0 24px 0
+
+      @media (max-width: 767px)
+        font-size: 24px
+        margin-bottom: 16px
+
+    .globe-wrapper
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 550px
+      height: 550px
+      max-width: 90vw
+      max-height: 90vw
+
+      .globe-container
+        width: 550px
+        height: 550px
+        display: flex
+        align-items: center
+        justify-content: center
+        transform-origin: center top
+        transform: scale(min(1, calc(90vw / 550px)))
+
+        @media (max-width: 600px)
+          transform: scale(0.65)
+
+        canvas
+          display: block
