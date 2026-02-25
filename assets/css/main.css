@@ -1186,17 +1186,17 @@ body {
   margin: 0 auto 25px auto;
 }
 .contact--lockup .modal--options li:nth-child(1) {
-  background-color: #ff69b4;
+  background-color: #ff0080;
 }
 .contact--lockup .modal--options li:nth-child(2) {
-  background-color: #0A66C2;
+  background-color: #000000;
 }
 .contact--lockup .modal--options li:nth-child(3) {
-  background-color: #0d7c3d;
+  background-color: #1588ff;
 }
 .contact--lockup .modal--options li:nth-child(4) {
   margin-bottom: 0;
-  background-color: #0f33ff;
+  background-color: #0d7c3d;
   text-transform: uppercase;
 }
 .contact--lockup .modal--options a {
