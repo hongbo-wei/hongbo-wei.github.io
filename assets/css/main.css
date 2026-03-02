@@ -1155,6 +1155,7 @@ body {
 }
 @media (max-width: 767px) {
   .contact--lockup {
+    width: 100%;
     justify-content: center;
     padding-right: 0;
   }
@@ -1162,7 +1163,7 @@ body {
 .contact--lockup .modal {
   padding: 45px 45px;
   text-align: center;
-  background-color: #0c0c0c;
+  background-color: #588888;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.75);
 }
 .contact--lockup .modal--information p,
@@ -1186,10 +1187,10 @@ body {
   margin: 0 auto 25px auto;
 }
 .contact--lockup .modal--options li:nth-child(1) {
-  background-color: #ff0080;
+  background-color: #000000;
 }
 .contact--lockup .modal--options li:nth-child(2) {
-  background-color: #000000;
+  background-color: #1588ff;
 }
 .contact--lockup .modal--options li:nth-child(3) {
   background-color: #1588ff;
