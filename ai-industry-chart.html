@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Industry Overview</title>
+<!-- Anti-FOUC: set theme before first paint -->
+<script>
+  (function(){
+    var s = localStorage.getItem('voltai-theme');
+    var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', s || (dark ? 'dark' : 'light'));
+  })();
+</script>
+<style>
+  /* ═══════════════════════════════
+     DARK TOKENS  (default)
+  ═══════════════════════════════ */
+  :root {
+    color-scheme: dark;
+    --bg-page:        #0f1117;
+    --text-body:      #e8eaf0;
+    --h1-color:       #c9d1e8;
+    --subtitle-color: #6b7491;
+    /* controls */
+    --ctrl-bg:        #1a1f2e;
+    --ctrl-border:    #252b3d;
+    --ctrl-btn:       #4a5580;
+    --ctrl-active-bg: #3b6fd4;
+    --ctrl-active:    #fff;
+    /* world models */
+    --wm-bg:          linear-gradient(135deg, #1a1060 0%, #2d1b69 100%);
+    --wm-border:      #6c3fc7;
+    --wm-shadow:      rgba(108,63,199,.35);
+    --wm-badge-bg:    #6c3fc7;
+    --wm-badge-color: #e2d9ff;
+    --wm-h2:          #d4bbff;
+    --wm-p:           #9a84c8;
+    --wm-tag-bg:      rgba(108,63,199,.25);
+    --wm-tag-border:  rgba(108,63,199,.5);
+    --wm-tag-color:   #c5adff;
+    /* connectors */
+    --conn1:          linear-gradient(to bottom, #6c3fc7, #3b6fd4);
+    --conn2:          linear-gradient(to bottom, #3b6fd4, #2da884);
+    --conn-arrow-1:   #3b6fd4;
+    --conn-arrow-2:   #2da884;
+    --conn-label:     #4a5580;
+    --conn-label-bd:  #2a3050;
+    /* section headers */
+    --mod-hdr:        #3b8de8;
+    --pil-hdr:        #2da884;
+    /* modality cards */
+    --mod-bg:         linear-gradient(160deg, #111c38 0%, #0d1628 100%);
+    --mod-border:     #1e3060;
+    --mod-hover:      #3b6fd4;
+    --mod-h3:         #8ab4f8;
+    --mod-p:          #5a6d96;
+    --stag-color:     #3a6fd4;
+    --stag-bg:        rgba(59,111,212,.12);
+    /* pillar cards */
+    --pil-bg:         linear-gradient(160deg, #0d2620 0%, #091a14 100%);
+    --pil-border:     #184030;
+    --pil-hover:      #2da884;
+    --pil-h3:         #5ecfa8;
+    --pil-p:          #3a6050;
+    --nbadge-bg:      #2da884;
+    --nbadge-color:   #001a10;
+    /* legend */
+    --legend-color:   #4a5580;
+  }
+
+  /* ═══════════════════════════════
+     LIGHT TOKENS
+  ═══════════════════════════════ */
+  html[data-theme="light"] {
+    color-scheme: light;
+    --bg-page:        #f2f4fc;
+    --text-body:      #1a1d2e;
+    --h1-color:       #252840;
+    --subtitle-color: #7080a0;
+    --ctrl-bg:        #ffffff;
+    --ctrl-border:    #dde4f0;
+    --ctrl-btn:       #8090b0;
+    --ctrl-active-bg: #2060c0;
+    --ctrl-active:    #fff;
+    --wm-bg:          linear-gradient(135deg, #ede8ff 0%, #e6dcff 100%);
+    --wm-border:      #a080e0;
+    --wm-shadow:      rgba(108,63,199,.12);
+    --wm-badge-bg:    #7050c0;
+    --wm-badge-color: #fff;
+    --wm-h2:          #3a1880;
+    --wm-p:           #6040a0;
+    --wm-tag-bg:      rgba(108,63,199,.08);
+    --wm-tag-border:  rgba(108,63,199,.22);
+    --wm-tag-color:   #5030a0;
+    --conn1:          linear-gradient(to bottom, #8060d0, #4070d4);
+    --conn2:          linear-gradient(to bottom, #4070d4, #1a8060);
+    --conn-arrow-1:   #4070d4;
+    --conn-arrow-2:   #1a8060;
+    --conn-label:     #a0a8c0;
+    --conn-label-bd:  #c8d0e8;
+    --mod-hdr:        #2060c0;
+    --pil-hdr:        #1a8060;
+    --mod-bg:         linear-gradient(160deg, #eef4ff 0%, #e8f0ff 100%);
+    --mod-border:     #b8cef0;
+    --mod-hover:      #4070d0;
+    --mod-h3:         #1a50b0;
+    --mod-p:          #4060a0;
+    --stag-color:     #2050b0;
+    --stag-bg:        rgba(32,80,176,.09);
+    --pil-bg:         linear-gradient(160deg, #eaf6ef 0%, #e0f2e8 100%);
+    --pil-border:     #98d4b8;
+    --pil-hover:      #1a8060;
+    --pil-h3:         #1a6848;
+    --pil-p:          #3a6050;
+    --nbadge-bg:      #1a7050;
+    --nbadge-color:   #e8fff5;
+    --legend-color:   #8090b0;
+  }
+
+  /* ═══════════════════════════════
+     BASE
+  ═══════════════════════════════ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    background: var(--bg-page);
+    color: var(--text-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .theme-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--ctrl-border);
+    background: var(--ctrl-bg);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .lang-toggle {
+    display: flex;
+    background: var(--ctrl-bg);
+    border: 1px solid var(--ctrl-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .lang-toggle button {
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    background: transparent;
+    color: var(--ctrl-btn);
+    letter-spacing: 0.04em;
+  }
+  .lang-toggle button.active {
+    background: var(--ctrl-active-bg);
+    color: var(--ctrl-active);
+  }
+
+  /* ── PAGE HEADER ── */
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--h1-color);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--subtitle-color);
+    margin-bottom: 48px;
+    text-align: center;
+  }
+
+  /* ── CHART WRAPPER ── */
+  .chart {
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── WORLD MODELS ── */
+  .world-models {
+    width: 100%;
+    background: var(--wm-bg);
+    border: 1.5px solid var(--wm-border);
+    border-radius: 14px;
+    padding: 22px 28px;
+    position: relative;
+    box-shadow: 0 0 32px var(--wm-shadow);
+  }
+  .world-models .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--wm-badge-bg);
+    color: var(--wm-badge-color);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 10px;
+  }
+  .world-models h2 { font-size: 20px; font-weight: 700; color: var(--wm-h2); margin-bottom: 6px; }
+  .world-models p  { font-size: 13px; color: var(--wm-p); line-height: 1.6; }
+  .world-models .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .world-models .tag {
+    font-size: 11px;
+    background: var(--wm-tag-bg);
+    border: 1px solid var(--wm-tag-border);
+    color: var(--wm-tag-color);
+    border-radius: 20px;
+    padding: 3px 12px;
+  }
+
+  /* ── CONNECTORS ── */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+    gap: 2px;
+  }
+  .connector .line {
+    width: 2px;
+    height: 20px;
+    background: var(--conn1);
+  }
+  .conn-2 .line { background: var(--conn2); }
+  .connector .arrow {
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+  }
+  .connector.down .arrow  { border-top: 8px solid var(--conn-arrow-1); }
+  .conn-2.down .arrow     { border-top-color: var(--conn-arrow-2); }
+  .connector-label {
+    font-size: 10px;
+    color: var(--conn-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border: 1px dashed var(--conn-label-bd);
+    border-radius: 20px;
+    margin: 4px 0;
+  }
+
+  /* ── SECTION ── */
+  .section { width: 100%; }
+  .section-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-header::before,
+  .section-header::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: 0.2; }
+  .modalities-header { color: var(--mod-hdr); }
+  .pillars-header    { color: var(--pil-hdr); }
+
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  /* ── MODALITY CARDS ── */
+  .modality-card {
+    background: var(--mod-bg);
+    border: 1.5px solid var(--mod-border);
+    border-radius: 12px;
+    padding: 18px 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .modality-card:hover { border-color: var(--mod-hover); transform: translateY(-2px); }
+  .modality-card .icon { font-size: 24px; margin-bottom: 10px; }
+  .modality-card h3 { font-size: 14px; font-weight: 600; color: var(--mod-h3); margin-bottom: 6px; }
+  .modality-card p  { font-size: 11.5px; color: var(--mod-p); line-height: 1.55; }
+  .modality-card .sub-tags { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
+  .modality-card .sub-tag {
+    font-size: 10px;
+    color: var(--stag-color);
+    background: var(--stag-bg);
+    border-radius: 4px;
+    padding: 2px 7px;
+    width: fit-content;
+  }
+
+  /* ── PILLAR CARDS ── */
+  .pillar-card {
+    background: var(--pil-bg);
+    border: 1.5px solid var(--pil-border);
+    border-radius: 12px;
+    padding: 18px 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .pillar-card:hover { border-color: var(--pil-hover); transform: translateY(-2px); }
+  .pillar-card .icon { font-size: 24px; margin-bottom: 10px; }
+  .pillar-card h3 {
+    font-size: 14px; font-weight: 600; color: var(--pil-h3); margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pillar-card p  { font-size: 11.5px; color: var(--pil-p); line-height: 1.55; }
+  .new-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--nbadge-bg); color: var(--nbadge-color);
+    border-radius: 3px; padding: 1px 5px;
+  }
+
+  /* ── LEGEND ── */
+  .legend { margin-top: 40px; display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--legend-color); }
+  .legend-dot  { width: 10px; height: 10px; border-radius: 50%; }
+
+  @media (max-width: 640px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 380px) { .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Switch theme">🌙</button>
+  <div class="lang-toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<h1 data-en="AI Industry — Full Overview" data-zh="AI 行业全览">AI Industry — Full Overview</h1>
+<p class="subtitle" data-en="Modalities · World Models · Industry Pillars" data-zh="模态 · 世界模型 · 行业支柱">Modalities · World Models · Industry Pillars</p>
+
+<div class="chart">
+
+  <!-- WORLD MODELS -->
+  <div class="world-models">
+    <div class="badge" data-en="Higher-Order Paradigm" data-zh="高阶范式">Higher-Order Paradigm</div>
+    <h2 data-en="World Models" data-zh="世界模型">World Models</h2>
+    <p data-en="Not a peer modality — a <strong>system-level paradigm</strong> that integrates all modalities below. Learns 3D spatial structure, physical laws, causal logic, and environmental interaction to simulate how the real world operates."
+       data-zh="并非并列模态——而是一种<strong>系统级范式</strong>，整合以下所有模态。学习三维空间结构、物理定律、因果逻辑与环境交互，以模拟真实世界的运作方式。">
+      Not a peer modality — a <strong>system-level paradigm</strong> that integrates all modalities below. Learns 3D spatial structure, physical laws, causal logic, and environmental interaction to simulate how the real world operates.
+    </p>
+    <div class="tags">
+      <span class="tag" data-en="3D Spatial Structure"   data-zh="三维空间结构">3D Spatial Structure</span>
+      <span class="tag" data-en="Physical Laws"          data-zh="物理定律">Physical Laws</span>
+      <span class="tag" data-en="Causal Logic"           data-zh="因果逻辑">Causal Logic</span>
+      <span class="tag" data-en="Environment Simulation" data-zh="环境模拟">Environment Simulation</span>
+      <span class="tag" data-en="General AI Cornerstone" data-zh="通用AI基石">General AI Cornerstone</span>
+    </div>
+  </div>
+
+  <!-- Connector 1 -->
+  <div class="connector down">
+    <div class="line"></div>
+    <div class="connector-label" data-en="integrates &amp; sits above" data-zh="整合并凌驾于上">integrates &amp; sits above</div>
+    <div class="line"></div>
+    <div class="arrow"></div>
+  </div>
+
+  <!-- CORE MODALITIES -->
+  <div class="section">
+    <div class="section-header modalities-header"
+         data-en="Core AI Modalities — Upper Layer"
+         data-zh="核心 AI 模态 — 上层">Core AI Modalities — Upper Layer</div>
+    <div class="cards">
+
+      <div class="modality-card">
+        <div class="icon">💬</div>
+        <h3 data-en="Language" data-zh="语言">Language</h3>
+        <p data-en="Text, dialogue, code, logical reasoning, knowledge induction. The foundation for cognitive thinking and human-computer interaction."
+           data-zh="文本、对话、代码、逻辑推理与知识归纳。认知思维与人机交互的底层基础。">
+          Text, dialogue, code, logical reasoning, knowledge induction. The foundation for cognitive thinking and human-computer interaction.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="Text &amp; Dialogue" data-zh="文本与对话">Text &amp; Dialogue</span>
+          <span class="sub-tag" data-en="Code Generation"     data-zh="代码生成">Code Generation</span>
+          <span class="sub-tag" data-en="Reasoning"           data-zh="推理">Reasoning</span>
+        </div>
+      </div>
+
+      <div class="modality-card">
+        <div class="icon">🎙️</div>
+        <h3 data-en="Voice &amp; Audio" data-zh="语音与音频">Voice &amp; Audio</h3>
+        <p data-en="Independent acoustic dimension. Speech recognition, synthesis, sound-field understanding, and voiceprint analysis."
+           data-zh="独立的声学维度。涵盖语音识别、语音合成、声场理解与声纹分析。">
+          Independent acoustic dimension. Speech recognition, synthesis, sound-field understanding, and voiceprint analysis.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="ASR / TTS"           data-zh="ASR / TTS">ASR / TTS</span>
+          <span class="sub-tag" data-en="Environmental Audio" data-zh="环境音频">Environmental Audio</span>
+          <span class="sub-tag" data-en="Voiceprint"          data-zh="声纹">Voiceprint</span>
+        </div>
+      </div>
+
+      <div class="modality-card">
+        <div class="icon">👁️</div>
+        <h3 data-en="Vision" data-zh="视觉">Vision</h3>
+        <p data-en="Image + Video. Static 2D parsing and feature recognition, plus temporal understanding of continuous frames and dynamic scenes."
+           data-zh="图像 + 视频。静态二维解析与特征识别，以及对连续帧和动态场景的时序理解。">
+          Image + Video. Static 2D parsing and feature recognition, plus temporal understanding of continuous frames and dynamic scenes.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="Static (Image)"        data-zh="静态（图像）">Static (Image)</span>
+          <span class="sub-tag" data-en="Temporal (Video)"      data-zh="时序（视频）">Temporal (Video)</span>
+          <span class="sub-tag" data-en="Industrial Inspection" data-zh="工业检测">Industrial Inspection</span>
+        </div>
+      </div>
+
+      <div class="modality-card">
+        <div class="icon">🤖</div>
+        <h3 data-en="Embodied / Action" data-zh="具身 / 行动">Embodied / Action</h3>
+        <p data-en="Physical-world interaction: robotic control, manipulation, locomotion, and the mapping from perception to action."
+           data-zh="物理世界交互：机器人控制、操作、运动，以及从感知到行动的映射。">
+          Physical-world interaction: robotic control, manipulation, locomotion, and the mapping from perception to action.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="Robotics"              data-zh="机器人">Robotics</span>
+          <span class="sub-tag" data-en="Autonomous Driving"    data-zh="自动驾驶">Autonomous Driving</span>
+          <span class="sub-tag" data-en="Industrial Automation" data-zh="工业自动化">Industrial Automation</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Connector 2 -->
+  <div class="connector down conn-2">
+    <div class="line"></div>
+    <div class="connector-label" data-en="sustained by" data-zh="由以下支柱支撑">sustained by</div>
+    <div class="line"></div>
+    <div class="arrow"></div>
+  </div>
+
+  <!-- INDUSTRY PILLARS -->
+  <div class="section">
+    <div class="section-header pillars-header"
+         data-en="Industry Pillars — Lower Layer"
+         data-zh="行业支柱 — 下层">Industry Pillars — Lower Layer</div>
+    <div class="cards">
+
+      <div class="pillar-card">
+        <div class="icon">🗄️</div>
+        <h3 data-en="Data" data-zh="数据">Data</h3>
+        <p data-en="Raw material of AI. Collection, cleaning, labeling, general corpora, and vertical-industry data. Determines the upper limit of model capability."
+           data-zh="AI 的原材料。采集、清洗、标注、通用语料与垂直行业数据，直接决定模型能力的上限。">
+          Raw material of AI. Collection, cleaning, labeling, general corpora, and vertical-industry data. Determines the upper limit of model capability.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="icon">🧠</div>
+        <h3 data-en="Algorithms" data-zh="算法">Algorithms</h3>
+        <p data-en="Logical brain of AI. Foundational architectures, training paradigms, fine-tuning, and alignment strategies."
+           data-zh="AI 的逻辑大脑。基础架构、训练范式、微调与对齐策略，定义模型的学习、理解与生成能力。">
+          Logical brain of AI. Foundational architectures, training paradigms, fine-tuning, and alignment strategies.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="icon">⚡</div>
+        <h3 data-en="Compute" data-zh="算力">Compute</h3>
+        <p data-en="Physical carrier of AI. GPUs, NPUs, server clusters, and edge devices that execute training and inference."
+           data-zh="AI 的物理载体。执行训练与推理的 GPU、NPU、服务器集群与边缘设备。">
+          Physical carrier of AI. GPUs, NPUs, server clusters, and edge devices that execute training and inference.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="icon">🔋</div>
+        <h3>
+          <span data-en="Energy" data-zh="能源">Energy</span>
+          <span class="new-badge" data-en="Emerging" data-zh="新兴">Emerging</span>
+        </h3>
+        <p data-en="Physical foundation for large-scale AI. Power supply, data-center cooling, carbon footprint. Rising to co-equal pillar status as frontier-model power demand reaches gigawatt scale."
+           data-zh="大规模 AI 运行的物理基础。算力供电、数据中心冷却与碳排放。随着前沿模型电力需求迈入吉瓦级别，正逐步跃升为并列支柱。">
+          Physical foundation for large-scale AI. Power supply, data-center cooling, carbon footprint. Rising to co-equal pillar status as frontier-model power demand reaches gigawatt scale.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#6c3fc7;"></div>
+    <span data-en="Integrative Paradigm" data-zh="整合范式">Integrative Paradigm</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#3b6fd4;"></div>
+    <span data-en="Core Modalities (Upper Layer)" data-zh="核心模态（上层）">Core Modalities (Upper Layer)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#2da884;"></div>
+    <span data-en="Industry Pillars (Lower Layer)" data-zh="行业支柱（下层）">Industry Pillars (Lower Layer)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#2da884; opacity:0.5;"></div>
+    <span data-en="Emerging Pillar" data-zh="新兴支柱">Emerging Pillar</span>
+  </div>
+</div>
+
+<script>
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-en]').forEach(el => { el.innerHTML = el.dataset[lang]; });
+  }
+
+  function toggleTheme() {
+    const cur  = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('voltai-theme', next);
+    updateThemeIcon(next);
+  }
+
+  function updateThemeIcon(theme) {
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    updateThemeIcon(document.documentElement.getAttribute('data-theme') || 'dark');
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      if (!localStorage.getItem('voltai-theme')) {
+        const t = e.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        updateThemeIcon(t);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

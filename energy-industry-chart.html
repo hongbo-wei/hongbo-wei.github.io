@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy Industry Overview — UAE/GCC 2026</title>
+<!-- Anti-FOUC: set theme before first paint -->
+<script>
+  (function(){
+    var s = localStorage.getItem('voltai-theme');
+    var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', s || (dark ? 'dark' : 'light'));
+  })();
+</script>
+<style>
+  /* ═══════════════════════════════
+     DARK TOKENS  (default)
+  ═══════════════════════════════ */
+  :root {
+    color-scheme: dark;
+    --bg-page:          #0c0e14;
+    --text-body:        #e8eaf0;
+    --h1-color:         #d4c5a0;
+    --subtitle-color:   #5a6070;
+    /* controls */
+    --ctrl-bg:          #141820;
+    --ctrl-border:      #252b3d;
+    --ctrl-btn:         #4a5580;
+    --ctrl-active-bg:   #c97a20;
+    --ctrl-active:      #fff;
+    /* geopolitics */
+    --geo-bg:           linear-gradient(135deg, #0d1635 0%, #152248 100%);
+    --geo-border:       #2a4a8a;
+    --geo-shadow:       rgba(42,74,138,.30);
+    --geo-badge-bg:     #2a4a8a;
+    --geo-badge-color:  #a8c4ff;
+    --geo-h2:           #8ab0f0;
+    --geo-p:            #5a78b0;
+    --geo-tag-bg:       rgba(42,74,138,.25);
+    --geo-tag-border:   rgba(42,74,138,.55);
+    --geo-tag-color:    #7aa0e0;
+    /* connectors */
+    --conn-line-1:      linear-gradient(to bottom, #2a4a8a, #c97a20);
+    --conn-line-2:      linear-gradient(to bottom, #c97a20, #2a8a6a);
+    --conn-arrow-amb:   #c97a20;
+    --conn-arrow-teal:  #2a8a6a;
+    --conn-label:       #3a4460;
+    --conn-label-bd:    #1e2535;
+    /* section headers */
+    --layer-hdr:        #c97a20;
+    --pillar-hdr:       #2a8a6a;
+    /* layer cards */
+    --layer-bg:         linear-gradient(160deg, #1a1308 0%, #110e05 100%);
+    --layer-border:     #2d2010;
+    --layer-hover:      #c97a20;
+    --layer-num:        #5a3a10;
+    --layer-h3:         #d4a060;
+    --layer-p:          #5a4828;
+    --layer-stag:       #c97a20;
+    --layer-stag-bg:    rgba(201,122,32,.10);
+    --layer-hot-border: #3d2a10;
+    --layer-hot-h3:     #f0b060;
+    /* pillar cards */
+    --pil-bg:           linear-gradient(160deg, #0a1f18 0%, #061410 100%);
+    --pil-border:       #123828;
+    --pil-hover:        #2a8a6a;
+    --pil-h3:           #4ab898;
+    --pil-p:            #2a5040;
+    --nbadge-bg:        #2a8a6a;
+    --nbadge-color:     #001810;
+    /* macro forces */
+    --force-bg:         #101420;
+    --force-border:     #1a2035;
+    --force-num:        #1a2240;
+    --force-h3:         #7890c8;
+    --force-p:          #3a4560;
+    --force-stat:       #5870a8;
+    --force-stat-bg:    rgba(88,112,168,.10);
+    --force-stat-bd:    rgba(88,112,168,.20);
+    /* page section */
+    --pst-color:        #3a4060;
+    --pst-line:         #1e2230;
+    /* UAE cards */
+    --uae-bg:           linear-gradient(160deg, #1a1508 0%, #110f05 100%);
+    --uae-border:       #2d2508;
+    --uae-h3:           #d4aa40;
+    --uae-p:            #5a4820;
+    --uae-kpi:          #e8c060;
+    --uae-kpi-label:    #7a6030;
+    /* opportunity cards */
+    --opp-bg:           #0f1220;
+    --opp-border:       #1a1d30;
+    --opp-hover:        #4a5090;
+    --opp-num:          #2a2e50;
+    --opp-h3:           #7080c8;
+    --opp-p:            #343860;
+    --opp-ex:           #3a4070;
+    /* decision */
+    --dec-bad-bg:       linear-gradient(135deg, #1a0808, #120505);
+    --dec-bad-border:   #3a1010;
+    --dec-bad-h3:       #c05050;
+    --dec-bad-li:       #6a3030;
+    --dec-bad-mark:     #803030;
+    --dec-good-bg:      linear-gradient(135deg, #081a10, #051208);
+    --dec-good-border:  #103a20;
+    --dec-good-h3:      #50c090;
+    --dec-good-li:      #306050;
+    --dec-good-mark:    #308060;
+    /* legend */
+    --legend-color:     #3a4060;
+  }
+
+  /* ═══════════════════════════════
+     LIGHT TOKENS
+  ═══════════════════════════════ */
+  html[data-theme="light"] {
+    color-scheme: light;
+    --bg-page:          #f5f2ec;
+    --text-body:        #1a1608;
+    --h1-color:         #2a2010;
+    --subtitle-color:   #706850;
+    --ctrl-bg:          #ffffff;
+    --ctrl-border:      #e0d8c8;
+    --ctrl-btn:         #908060;
+    --ctrl-active-bg:   #b06010;
+    --ctrl-active:      #fff;
+    --geo-bg:           linear-gradient(135deg, #e8eeff 0%, #dde8ff 100%);
+    --geo-border:       #6080d0;
+    --geo-shadow:       rgba(42,74,138,.10);
+    --geo-badge-bg:     #3050a0;
+    --geo-badge-color:  #fff;
+    --geo-h2:           #1a3890;
+    --geo-p:            #3050a0;
+    --geo-tag-bg:       rgba(42,74,138,.07);
+    --geo-tag-border:   rgba(42,74,138,.22);
+    --geo-tag-color:    #2040a0;
+    --conn-line-1:      linear-gradient(to bottom, #4060c0, #b06010);
+    --conn-line-2:      linear-gradient(to bottom, #b06010, #1a7050);
+    --conn-arrow-amb:   #b06010;
+    --conn-arrow-teal:  #1a7050;
+    --conn-label:       #a0a8b0;
+    --conn-label-bd:    #c8d0d8;
+    --layer-hdr:        #a06010;
+    --pillar-hdr:       #1a7050;
+    --layer-bg:         linear-gradient(160deg, #fff8e8 0%, #fff2d8 100%);
+    --layer-border:     #e0c060;
+    --layer-hover:      #b06020;
+    --layer-num:        #a07030;
+    --layer-h3:         #804010;
+    --layer-p:          #706030;
+    --layer-stag:       #a05010;
+    --layer-stag-bg:    rgba(160,80,16,.09);
+    --layer-hot-border: #d0a030;
+    --layer-hot-h3:     #906020;
+    --pil-bg:           linear-gradient(160deg, #e8f8f0 0%, #dcf0e8 100%);
+    --pil-border:       #80c8a8;
+    --pil-hover:        #1a7050;
+    --pil-h3:           #1a6848;
+    --pil-p:            #3a6050;
+    --nbadge-bg:        #1a7050;
+    --nbadge-color:     #e8fff5;
+    --force-bg:         #f0f2f8;
+    --force-border:     #d0d8e8;
+    --force-num:        #d0d8f0;
+    --force-h3:         #3040a0;
+    --force-p:          #505880;
+    --force-stat:       #4060a0;
+    --force-stat-bg:    rgba(64,96,160,.07);
+    --force-stat-bd:    rgba(64,96,160,.18);
+    --pst-color:        #8090a0;
+    --pst-line:         #e0e4f0;
+    --uae-bg:           linear-gradient(160deg, #fff8e0 0%, #fff0c8 100%);
+    --uae-border:       #d4b040;
+    --uae-h3:           #805010;
+    --uae-p:            #7a6020;
+    --uae-kpi:          #905020;
+    --uae-kpi-label:    #a07030;
+    --opp-bg:           #f0f2fa;
+    --opp-border:       #c8d0ec;
+    --opp-hover:        #6070c0;
+    --opp-num:          #c0c8e0;
+    --opp-h3:           #3040a0;
+    --opp-p:            #505880;
+    --opp-ex:           #7080a0;
+    --dec-bad-bg:       linear-gradient(135deg, #fff2f2, #ffe8e8);
+    --dec-bad-border:   #e0b0b0;
+    --dec-bad-h3:       #b02020;
+    --dec-bad-li:       #803030;
+    --dec-bad-mark:     #a02020;
+    --dec-good-bg:      linear-gradient(135deg, #f0fff4, #e8f8ee);
+    --dec-good-border:  #90d0b0;
+    --dec-good-h3:      #1a7848;
+    --dec-good-li:      #2a6040;
+    --dec-good-mark:    #1a7040;
+    --legend-color:     #7080a0;
+  }
+
+  /* ═══════════════════════════════
+     BASE
+  ═══════════════════════════════ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    background: var(--bg-page);
+    color: var(--text-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px 60px;
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .theme-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--ctrl-border);
+    background: var(--ctrl-bg);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .lang-toggle {
+    display: flex;
+    background: var(--ctrl-bg);
+    border: 1px solid var(--ctrl-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .lang-toggle button {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    background: transparent;
+    color: var(--ctrl-btn);
+    letter-spacing: 0.04em;
+  }
+  .lang-toggle button.active { background: var(--ctrl-active-bg); color: var(--ctrl-active); }
+
+  /* ── PAGE HEADER ── */
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--h1-color);
+    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--subtitle-color);
+    margin-bottom: 52px;
+    text-align: center;
+  }
+
+  /* ── CHART WRAPPER ── */
+  .chart {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── PAGE SECTIONS ── */
+  .page-section { width: 100%; margin-top: 48px; }
+  .page-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pst-color);
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .page-section-title::before,
+  .page-section-title::after { content: ""; flex: 1; height: 1px; background: var(--pst-line); }
+
+  /* ── GEOPOLITICS ── */
+  .geopolitics {
+    width: 100%;
+    background: var(--geo-bg);
+    border: 1.5px solid var(--geo-border);
+    border-radius: 14px;
+    padding: 22px 28px;
+    box-shadow: 0 0 32px var(--geo-shadow);
+  }
+  .geopolitics .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--geo-badge-bg);
+    color: var(--geo-badge-color);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 10px;
+  }
+  .geopolitics h2 { font-size: 19px; font-weight: 700; color: var(--geo-h2); margin-bottom: 6px; }
+  .geopolitics p  { font-size: 13px; color: var(--geo-p); line-height: 1.6; }
+  .geopolitics .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .geopolitics .tag {
+    font-size: 11px;
+    background: var(--geo-tag-bg);
+    border: 1px solid var(--geo-tag-border);
+    color: var(--geo-tag-color);
+    border-radius: 20px;
+    padding: 3px 12px;
+  }
+
+  /* ── CONNECTORS ── */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    gap: 2px;
+  }
+  .connector .line   { width: 2px; height: 18px; }
+  .connector .line-1 { background: var(--conn-line-1); }
+  .connector .line-2 { background: var(--conn-line-2); }
+  .connector .arrow  { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; }
+  .connector .arrow-amber { border-top: 8px solid var(--conn-arrow-amb); }
+  .connector .arrow-teal  { border-top: 8px solid var(--conn-arrow-teal); }
+  .connector-label {
+    font-size: 10px;
+    color: var(--conn-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border: 1px dashed var(--conn-label-bd);
+    border-radius: 20px;
+    margin: 3px 0;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section { width: 100%; }
+  .section-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-header::before,
+  .section-header::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: 0.18; }
+  .layers-header  { color: var(--layer-hdr); }
+  .pillars-header { color: var(--pillar-hdr); }
+
+  /* ── GRIDS ── */
+  .cards-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .cards-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  /* ── LAYER CARDS ── */
+  .layer-card {
+    background: var(--layer-bg);
+    border: 1.5px solid var(--layer-border);
+    border-radius: 12px;
+    padding: 16px 14px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .layer-card:hover { border-color: var(--layer-hover); transform: translateY(-2px); }
+  .layer-card .num  { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: var(--layer-num); text-transform: uppercase; margin-bottom: 6px; }
+  .layer-card .icon { font-size: 22px; margin-bottom: 8px; }
+  .layer-card h3    { font-size: 13px; font-weight: 700; color: var(--layer-h3); margin-bottom: 5px; }
+  .layer-card p     { font-size: 11px; color: var(--layer-p); line-height: 1.55; }
+  .layer-card .sub-tags { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; }
+  .layer-card .sub-tag  { font-size: 9.5px; color: var(--layer-stag); background: var(--layer-stag-bg); border-radius: 4px; padding: 2px 6px; width: fit-content; }
+  .layer-card.hot   { border-color: var(--layer-hot-border); }
+  .layer-card.hot h3 { color: var(--layer-hot-h3); }
+
+  /* ── PILLAR CARDS ── */
+  .pillar-card {
+    background: var(--pil-bg);
+    border: 1.5px solid var(--pil-border);
+    border-radius: 12px;
+    padding: 16px 14px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .pillar-card:hover { border-color: var(--pil-hover); transform: translateY(-2px); }
+  .pillar-card .icon { font-size: 22px; margin-bottom: 8px; }
+  .pillar-card h3    { font-size: 13px; font-weight: 700; color: var(--pil-h3); margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+  .pillar-card p     { font-size: 11px; color: var(--pil-p); line-height: 1.55; }
+  .new-badge {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--nbadge-bg); color: var(--nbadge-color);
+    border-radius: 3px; padding: 1px 5px;
+  }
+
+  /* ── MACRO FORCES ── */
+  .force-card {
+    background: var(--force-bg);
+    border: 1.5px solid var(--force-border);
+    border-radius: 12px;
+    padding: 18px 16px;
+  }
+  .force-card .force-num { font-size: 28px; font-weight: 800; color: var(--force-num); line-height: 1; margin-bottom: 8px; }
+  .force-card h3  { font-size: 13px; font-weight: 700; color: var(--force-h3); margin-bottom: 6px; }
+  .force-card p   { font-size: 11px; color: var(--force-p); line-height: 1.6; }
+  .force-card .stat {
+    display: inline-block; margin-top: 10px; font-size: 10px;
+    color: var(--force-stat); background: var(--force-stat-bg);
+    border: 1px solid var(--force-stat-bd); border-radius: 4px; padding: 2px 8px;
+  }
+
+  /* ── UAE LENS ── */
+  .uae-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .uae-card {
+    background: var(--uae-bg);
+    border: 1.5px solid var(--uae-border);
+    border-radius: 12px;
+    padding: 16px 14px;
+  }
+  .uae-card .icon      { font-size: 22px; margin-bottom: 8px; }
+  .uae-card h3         { font-size: 13px; font-weight: 700; color: var(--uae-h3); margin-bottom: 6px; }
+  .uae-card p          { font-size: 11px; color: var(--uae-p); line-height: 1.6; }
+  .uae-card .kpi       { margin-top: 8px; font-size: 15px; font-weight: 700; color: var(--uae-kpi); line-height: 1.2; }
+  .uae-card .kpi-label { font-size: 9.5px; color: var(--uae-kpi-label); margin-top: 2px; }
+
+  /* ── SOFTWARE OPPORTUNITIES ── */
+  .opp-card {
+    background: var(--opp-bg);
+    border: 1.5px solid var(--opp-border);
+    border-radius: 12px;
+    padding: 16px 14px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .opp-card:hover { border-color: var(--opp-hover); transform: translateY(-2px); }
+  .opp-card .opp-num { font-size: 9px; font-weight: 700; color: var(--opp-num); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .opp-card .icon    { font-size: 20px; margin-bottom: 8px; }
+  .opp-card h3       { font-size: 12px; font-weight: 700; color: var(--opp-h3); margin-bottom: 5px; }
+  .opp-card p        { font-size: 10.5px; color: var(--opp-p); line-height: 1.55; }
+  .opp-card .examples{ font-size: 9.5px; color: var(--opp-ex); margin-top: 8px; font-style: italic; }
+
+  /* ── DECISION FRAME ── */
+  .decision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .decision-card { border-radius: 12px; padding: 18px 18px; }
+  .decision-card.bad  { background: var(--dec-bad-bg);  border: 1.5px solid var(--dec-bad-border); }
+  .decision-card.good { background: var(--dec-good-bg); border: 1.5px solid var(--dec-good-border); }
+  .decision-card h3   { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+  .decision-card.bad  h3 { color: var(--dec-bad-h3); }
+  .decision-card.good h3 { color: var(--dec-good-h3); }
+  .decision-card ul   { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .decision-card li   { font-size: 11.5px; line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; }
+  .decision-card.bad  li { color: var(--dec-bad-li); }
+  .decision-card.good li { color: var(--dec-good-li); }
+  .decision-card li::before { flex-shrink: 0; margin-top: 1px; }
+  .decision-card.bad  li::before { content: "✕"; color: var(--dec-bad-mark); }
+  .decision-card.good li::before { content: "✓"; color: var(--dec-good-mark); }
+
+  /* ── LEGEND ── */
+  .legend { margin-top: 44px; display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--legend-color); }
+  .legend-dot  { width: 10px; height: 10px; border-radius: 50%; }
+
+  @media (max-width: 760px) {
+    .cards-5 { grid-template-columns: repeat(2, 1fr); }
+    .cards-4, .uae-grid { grid-template-columns: repeat(2, 1fr); }
+    .cards-3 { grid-template-columns: 1fr; }
+    .decision-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 420px) {
+    .cards-5, .cards-4, .uae-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Switch theme">🌙</button>
+  <div class="lang-toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<h1 data-en="Energy Industry — Full Overview (UAE / GCC, 2026)"
+    data-zh="能源行业全览（UAE / GCC，2026）">Energy Industry — Full Overview (UAE / GCC, 2026)</h1>
+<p class="subtitle"
+   data-en="Five Value-Chain Layers · Geopolitics & Integration · Industry Pillars · UAE Lens"
+   data-zh="五大价值链层级 · 地缘政治与系统整合 · 行业支柱 · UAE 视角">Five Value-Chain Layers · Geopolitics & Integration · Industry Pillars · UAE Lens</p>
+
+<div class="chart">
+
+  <!-- ══ GEOPOLITICS ══ -->
+  <div class="geopolitics" style="width:100%">
+    <div class="badge" data-en="Higher-Order Force" data-zh="高阶驱动力">Higher-Order Force</div>
+    <h2 data-en="Geopolitics, Energy Security &amp; System Integration"
+        data-zh="地缘政治、能源安全与系统整合">Geopolitics, Energy Security &amp; System Integration</h2>
+    <p data-en="Not a layer — a <strong>strategic field that spans all five value-chain layers</strong>, determining how each is built, financed, and connected. China bolsters domestic resilience &amp; dominates new-tech supply chains; Europe pivots from Russian fuels; the US onshores critical minerals. Industrial policy (IRA, CBAM, GCC localization) has replaced climate idealism."
+       data-zh="并非某一层级——而是<strong>横跨所有五大价值链层级的战略场域</strong>，决定着每一层级的建设、融资与衔接方式。中国强化国内能源韧性并主导新技术供应链；欧洲摆脱对俄罗斯燃料的依赖；美国推进关键矿产本土化。产业政策（IRA、CBAM、GCC本地化要求）已取代气候理想主义。">
+      Not a layer — a <strong>strategic field that spans all five value-chain layers</strong>, determining how each is built, financed, and connected. China bolsters domestic resilience &amp; dominates new-tech supply chains; Europe pivots from Russian fuels; the US onshores critical minerals. Industrial policy (IRA, CBAM, GCC localization) has replaced climate idealism.
+    </p>
+    <div class="tags">
+      <span class="tag" data-en="Geopolitical Competition" data-zh="地缘政治博弈">Geopolitical Competition</span>
+      <span class="tag" data-en="Industrial Policy"        data-zh="产业政策">Industrial Policy</span>
+      <span class="tag" data-en="Sector Coupling"          data-zh="行业耦合">Sector Coupling</span>
+      <span class="tag" data-en="Energy Security"          data-zh="能源安全">Energy Security</span>
+      <span class="tag" data-en="Carbon Constraint"        data-zh="碳约束">Carbon Constraint</span>
+      <span class="tag" data-en="Critical Minerals"        data-zh="关键矿产">Critical Minerals</span>
+    </div>
+  </div>
+
+  <!-- Connector 1 -->
+  <div class="connector">
+    <div class="line line-1"></div>
+    <div class="connector-label" data-en="integrates &amp; spans across" data-zh="整合并横跨所有层级">integrates &amp; spans across</div>
+    <div class="line line-1"></div>
+    <div class="arrow arrow-amber"></div>
+  </div>
+
+  <!-- ══ FIVE VALUE-CHAIN LAYERS ══ -->
+  <div class="section">
+    <div class="section-header layers-header"
+         data-en="Five Core Value-Chain Layers — Upper Layer"
+         data-zh="五大核心价值链层级 — 上层">Five Core Value-Chain Layers — Upper Layer</div>
+    <div class="cards-5">
+
+      <div class="layer-card">
+        <div class="num" data-en="Layer 1" data-zh="第一层">Layer 1</div>
+        <div class="icon">⛏️</div>
+        <h3 data-en="Upstream" data-zh="上游">Upstream</h3>
+        <p data-en="Oil, gas, coal extraction. 2026 upstream investment ~US$485B (▼3% YoY). Dominated by NOCs (ADNOC, Aramco, CNPC) and supermajors. Capital-intensive, hard to enter."
+           data-zh="石油、天然气、煤炭开采。2026年上游投资约4850亿美元（同比▼3%）。由国家石油公司（ADNOC、沙特阿美、中石油）与超级大型石油公司主导，资本密集，进入壁垒高。">
+          Oil, gas, coal extraction. 2026 upstream investment ~US$485B (▼3% YoY). Dominated by NOCs (ADNOC, Aramco, CNPC) and supermajors. Capital-intensive, hard to enter.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="Oil &amp; Gas E&amp;P" data-zh="油气勘探开采">Oil &amp; Gas E&amp;P</span>
+          <span class="sub-tag" data-en="NOCs / Supermajors"    data-zh="国家石油公司">NOCs / Supermajors</span>
+          <span class="sub-tag" data-en="$485B Capex"           data-zh="4850亿美元资本支出">$485B Capex</span>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="num" data-en="Layer 2" data-zh="第二层">Layer 2</div>
+        <div class="icon">🛢️</div>
+        <h3 data-en="Midstream" data-zh="中游">Midstream</h3>
+        <p data-en="Pipelines, LNG terminals, refineries, gas processing. Hot subsegment: LNG as US races to capture global gas trade. BESS capex ~US$20B in 2026 after a ~50% jump last year."
+           data-zh="管道、液化天然气终端、炼油厂、天然气加工。最热门子板块：美国争夺全球天然气贸易份额，LNG量价齐升；电池储能系统（BESS）资本支出约200亿美元，去年同比激增约50%。">
+          Pipelines, LNG terminals, refineries, gas processing. Hot subsegment: LNG as US races to capture global gas trade. BESS capex ~US$20B in 2026 after a ~50% jump last year.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="Pipelines / LNG"  data-zh="管道 / 液化天然气">Pipelines / LNG</span>
+          <span class="sub-tag" data-en="BESS ~$20B"       data-zh="BESS ~200亿美元">BESS ~$20B</span>
+          <span class="sub-tag" data-en="Gas Processing"   data-zh="天然气处理">Gas Processing</span>
+        </div>
+      </div>
+
+      <div class="layer-card hot">
+        <div class="num" data-en="Layer 3 · Active" data-zh="第三层 · 热点">Layer 3 · Active</div>
+        <div class="icon">☀️</div>
+        <h3 data-en="Generation" data-zh="发电">Generation</h3>
+        <p data-en="Solar + wind approaching ~4,000 GW in 2026, near parity with global coal + gas capacity. Nuclear SMRs are the new bet. Emerging: green/blue hydrogen, geothermal, fusion R&amp;D."
+           data-zh="2026年太阳能+风能装机接近4000 GW，趋近与全球煤电+气电装机总量持平。核能小型模块化反应堆（SMR）成为新赌注。新兴方向：绿氢/蓝氢、地热、聚变研发。">
+          Solar + wind approaching ~4,000 GW in 2026, near parity with global coal + gas capacity. Nuclear SMRs are the new bet. Emerging: green/blue hydrogen, geothermal, fusion R&amp;D.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="Solar / Wind"     data-zh="太阳能 / 风能">Solar / Wind</span>
+          <span class="sub-tag" data-en="Nuclear SMR"      data-zh="核能 SMR">Nuclear SMR</span>
+          <span class="sub-tag" data-en="Green / Blue H₂"  data-zh="绿氢 / 蓝氢">Green / Blue H₂</span>
+        </div>
+      </div>
+
+      <div class="layer-card hot">
+        <div class="num" data-en="Layer 4 · Bottleneck" data-zh="第四层 · 瓶颈">Layer 4 · Bottleneck</div>
+        <div class="icon">🔌</div>
+        <h3 data-en="Grid &amp; Distribution" data-zh="电网与配电">Grid &amp; Distribution</h3>
+        <p data-en="The chokepoint of the entire transition. Aging infrastructure + soaring data-center demand + intermittent renewables = fastest-growing segment globally. Where most software startups concentrate."
+           data-zh="整个能源转型的瓶颈。老旧基础设施＋激增的数据中心需求＋间歇性可再生能源，造就了全球增速最快的细分市场，也是软件创业公司最集中的赛道。">
+          The chokepoint of the entire transition. Aging infrastructure + soaring data-center demand + intermittent renewables = fastest-growing segment globally. Where most software startups concentrate.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="Smart Grid Software" data-zh="智能电网软件">Smart Grid Software</span>
+          <span class="sub-tag" data-en="Battery Dispatch"    data-zh="电池调度">Battery Dispatch</span>
+          <span class="sub-tag" data-en="Demand Response"     data-zh="需求响应">Demand Response</span>
+        </div>
+      </div>
+
+      <div class="layer-card">
+        <div class="num" data-en="Layer 5" data-zh="第五层">Layer 5</div>
+        <div class="icon">🚗</div>
+        <h3 data-en="End-Use" data-zh="终端使用">End-Use</h3>
+        <p data-en="EVs ~24M units in 2026 (+15% YoY, ≈22–26% of light-vehicle sales). Building electrification, industrial decarbonization, energy management. Most software-rich layer."
+           data-zh="2026年全球电动汽车销量约2400万辆（同比+15%，约占轻型车销量22–26%）。建筑电气化、工业脱碳、能源管理。软件含量最高的层级。">
+          EVs ~24M units in 2026 (+15% YoY, ≈22–26% of light-vehicle sales). Building electrification, industrial decarbonization, energy management. Most software-rich layer.
+        </p>
+        <div class="sub-tags">
+          <span class="sub-tag" data-en="EVs ~24M"                 data-zh="电动汽车 ~2400万辆">EVs ~24M</span>
+          <span class="sub-tag" data-en="Building Electrification" data-zh="建筑电气化">Building Electrification</span>
+          <span class="sub-tag" data-en="Industrial Decarb."       data-zh="工业脱碳">Industrial Decarb.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Connector 2 -->
+  <div class="connector">
+    <div class="line line-2"></div>
+    <div class="connector-label" data-en="sustained by" data-zh="由以下支柱支撑">sustained by</div>
+    <div class="line line-2"></div>
+    <div class="arrow arrow-teal"></div>
+  </div>
+
+  <!-- ══ INDUSTRY PILLARS ══ -->
+  <div class="section">
+    <div class="section-header pillars-header"
+         data-en="Industry Pillars — Lower Layer"
+         data-zh="行业支柱 — 下层">Industry Pillars — Lower Layer</div>
+    <div class="cards-4">
+
+      <div class="pillar-card">
+        <div class="icon">🏔️</div>
+        <h3 data-en="Resources" data-zh="资源">Resources</h3>
+        <p data-en="Raw fuel: oil &amp; gas reserves, solar irradiance, wind regimes, uranium. Increasingly: critical minerals (lithium, cobalt, nickel, rare earths). Directly sets production upper limits."
+           data-zh="原材料燃料：油气储量、太阳辐射、风能资源、铀矿。日益重要的关键矿产：锂、钴、镍、稀土。直接决定任何国家或企业的产能上限。">
+          Raw fuel: oil &amp; gas reserves, solar irradiance, wind regimes, uranium. Increasingly: critical minerals (lithium, cobalt, nickel, rare earths). Directly sets production upper limits.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="icon">⚙️</div>
+        <h3 data-en="Technology" data-zh="技术">Technology</h3>
+        <p data-en="Engineering brain: drilling, refining, generation tech, grid software, storage chemistry, EV powertrains, hydrogen electrolysis. Defines cost curves and capability frontiers."
+           data-zh="工程大脑：钻探、炼油、发电技术、电网软件、储能化学、电动汽车动力系统、氢电解技术。定义成本曲线与能力边界。">
+          Engineering brain: drilling, refining, generation tech, grid software, storage chemistry, EV powertrains, hydrogen electrolysis. Defines cost curves and capability frontiers.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="icon">💰</div>
+        <h3 data-en="Capital" data-zh="资本">Capital</h3>
+        <p data-en="Financing carrier. Energy is among the most capex-heavy industries on earth. SWFs, project finance, PPAs, and infrastructure debt physically move steel and silicon."
+           data-zh="融资载体。能源是地球上资本支出最密集的行业之一。主权财富基金、项目融资、购电协议（PPA）与基础设施债务推动实物投资落地。">
+          Financing carrier. Energy is among the most capex-heavy industries on earth. SWFs, project finance, PPAs, and infrastructure debt physically move steel and silicon.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="icon">📋</div>
+        <h3>
+          <span data-en="Policy &amp; Carbon" data-zh="政策与碳约束">Policy &amp; Carbon</span>
+          <span class="new-badge" data-en="Emerging" data-zh="新兴">Emerging</span>
+        </h3>
+        <p data-en="Net-zero mandates, ESG disclosure (EU CSRD, ISSB, UAE rules), industrial policy (IRA, CBAM), and the carbon price itself. Historically an externality; now a co-equal pillar shaping every investment decision."
+           data-zh="净零目标、ESG信息披露（EU CSRD、ISSB、UAE规则）、产业政策（IRA、CBAM）及碳价本身。历来被视为外部性因素，现已成为主导每项投资决策的并列支柱。">
+          Net-zero mandates, ESG disclosure (EU CSRD, ISSB, UAE rules), industrial policy (IRA, CBAM), and the carbon price itself. Historically an externality; now a co-equal pillar shaping every investment decision.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end .chart -->
+
+
+<!-- ══ MACRO FORCES ══ -->
+<div class="page-section" style="max-width:960px">
+  <div class="page-section-title"
+       data-en="Macro Context — Three Forces Reshaping the Industry"
+       data-zh="宏观背景 — 三大重塑行业的力量">Macro Context — Three Forces Reshaping the Industry</div>
+  <div class="cards-3">
+
+    <div class="force-card">
+      <div class="force-num">01</div>
+      <h3 data-en="Demand Exploding, Supply Can't Keep Up" data-zh="需求激增，供给难以跟上">Demand Exploding, Supply Can't Keep Up</h3>
+      <p data-en="Global energy demand grew ~1.3% in 2025; electricity demand grew ~3% (+800 TWh). The driver is no longer just population — it's AI data centers, transport electrification, and heating/cooling."
+         data-zh="2025年全球能源需求增长约1.3%；电力需求增长约3%（+800 TWh）。驱动力不再只是人口增长，而是AI数据中心、交通电气化和供暖/制冷需求。">
+        Global energy demand grew ~1.3% in 2025; electricity demand grew ~3% (+800 TWh). The driver is no longer just population — it's AI data centers, transport electrification, and heating/cooling.
+      </p>
+      <span class="stat"
+            data-en="Data centers: 27 GW PPAs (Oct 2025) · &gt;43% of global PPAs"
+            data-zh="数据中心：2025年10月前签署27 GW清洁能源PPA，占全球PPA总量逾43%">Data centers: 27 GW PPAs (Oct 2025) · &gt;43% of global PPAs</span>
+    </div>
+
+    <div class="force-card">
+      <div class="force-num">02</div>
+      <h3 data-en="Transition Slowed, Not Stopped" data-zh="转型放缓，但未停止">Transition Slowed, Not Stopped</h3>
+      <p data-en="Total global energy investment passed US$3.3T in 2025, with US$2.2T flowing into clean energy. Renewables hit a record US$675B (10% CAGR since 2020), but flat real-terms investment is forecast through 2030."
+         data-zh="2025年全球能源投资总额突破3.3万亿美元，其中2.2万亿美元流入清洁能源。可再生能源投资创下6750亿美元历史纪录（2020年以来年复合增长率10%），但预计2030年前实际投资将维持平稳。">
+        Total global energy investment passed US$3.3T in 2025, with US$2.2T flowing into clean energy. Renewables hit a record US$675B (10% CAGR since 2020), but flat real-terms investment is forecast through 2030.
+      </p>
+      <span class="stat"
+            data-en="$3.3T total · $2.2T clean · $675B renewables"
+            data-zh="总计3.3万亿美元 · 清洁能源2.2万亿 · 可再生能源6750亿">$3.3T total · $2.2T clean · $675B renewables</span>
+    </div>
+
+    <div class="force-card">
+      <div class="force-num">03</div>
+      <h3 data-en="Geopolitics Back at the Center" data-zh="地缘政治重回中心">Geopolitics Back at the Center</h3>
+      <p data-en="Energy security has returned to the top of every national agenda. Industrial policy — local content, tariffs, subsidies — has displaced climate idealism as the dominant logic. The easy gains are over; the next decade is execution."
+         data-zh="能源安全已重回各国政策议程首位。产业政策——本地含量要求、关税、补贴——已取代气候理想主义，成为主导逻辑。触手可得的果实已所剩无几，未来十年是执行力的比拼。">
+        Energy security has returned to the top of every national agenda. Industrial policy — local content, tariffs, subsidies — has displaced climate idealism as the dominant logic. The easy gains are over; the next decade is execution.
+      </p>
+      <span class="stat" data-en="IRA · CBAM · GCC Localization Mandates" data-zh="IRA · CBAM · GCC本地化要求">IRA · CBAM · GCC Localization Mandates</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ UAE LENS ══ -->
+<div class="page-section" style="max-width:960px">
+  <div class="page-section-title"
+       data-en="UAE-Specific Lens — Contradictory Strategy, Fully Funded"
+       data-zh="UAE 视角 — 双轨并行，全力押注">UAE-Specific Lens — Contradictory Strategy, Fully Funded</div>
+  <div class="uae-grid">
+
+    <div class="uae-card">
+      <div class="icon">🛢️</div>
+      <h3 data-en="Hydrocarbons" data-zh="油气">Hydrocarbons</h3>
+      <p data-en="ADNOC remains a global top-tier oil major. Barakah nuclear supplies ~25% of UAE electricity. Khazna Solar PV adds 1.5 GW toward Abu Dhabi's 18 GW solar target by 2035."
+         data-zh="ADNOC仍为全球顶级石油公司。巴拉卡核电站满负荷后供应约25%的UAE电力。哈兹纳太阳能电站新增1.5 GW，助力阿布扎比2035年实现18 GW太阳能目标。">
+        ADNOC remains a global top-tier oil major. Barakah nuclear supplies ~25% of UAE electricity. Khazna Solar PV adds 1.5 GW toward Abu Dhabi's 18 GW solar target by 2035.
+      </p>
+      <div class="kpi">18 GW</div>
+      <div class="kpi-label" data-en="Abu Dhabi solar target by 2035" data-zh="阿布扎比2035年太阳能目标">Abu Dhabi solar target by 2035</div>
+    </div>
+
+    <div class="uae-card">
+      <div class="icon">🌱</div>
+      <h3 data-en="Renewables — Masdar" data-zh="可再生能源 — Masdar">Renewables — Masdar</h3>
+      <p data-en="Masdar (ADNOC + Mubadala + TAQA) targets 100 GW renewable portfolio by 2030, already operating across six continents. Apr 2026: reported $2.2B JV with TotalEnergies, 9 Asian countries."
+         data-zh="Masdar（ADNOC + Mubadala + TAQA 联合持股）目标2030年前实现100 GW可再生能源组合，已在六大洲布局运营。2026年4月据报与道达尔能源签署22亿美元合资协议，覆盖9个亚洲国家。">
+        Masdar (ADNOC + Mubadala + TAQA) targets 100 GW renewable portfolio by 2030, already operating across six continents. Apr 2026: reported $2.2B JV with TotalEnergies, 9 Asian countries.
+      </p>
+      <div class="kpi">100 GW</div>
+      <div class="kpi-label" data-en="Masdar renewable target by 2030" data-zh="Masdar 2030年可再生能源目标">Masdar renewable target by 2030</div>
+    </div>
+
+    <div class="uae-card">
+      <div class="icon">⚗️</div>
+      <h3 data-en="Hydrogen Strategy" data-zh="氢能战略">Hydrogen Strategy</h3>
+      <p data-en="National Hydrogen Strategy (Cabinet-approved 2023). Goal: −25% emissions in hard-to-abate sectors by 2031 (heavy industry, transport, aviation, shipping)."
+         data-zh="国家氢能战略（2023年内阁批准）。目标：2031年前在难以脱碳行业（重工业、陆运、航空、航运）实现碳排放减少25%。">
+        National Hydrogen Strategy (Cabinet-approved 2023). Goal: −25% emissions in hard-to-abate sectors by 2031 (heavy industry, transport, aviation, shipping).
+      </p>
+      <div class="kpi">1.4 → 7.5 → 15 Mt</div>
+      <div class="kpi-label" data-en="Hydrogen targets: 2031 / 2040 / 2050" data-zh="氢能目标：2031 / 2040 / 2050年">Hydrogen targets: 2031 / 2040 / 2050</div>
+    </div>
+
+    <div class="uae-card">
+      <div class="icon">🎯</div>
+      <h3 data-en="Net-Zero 2050" data-zh="净零 2050">Net-Zero 2050</h3>
+      <p data-en="UAE Energy Strategy 2050. Backed by Federal Decree-Law No. 11 of 2024 on Climate Change. Key actors: MoEI, MoCCAE, Mubadala, ADQ, ADIA, Masdar, TAQA, ADNOC, DEWA."
+         data-zh="UAE能源战略2050。以2024年第11号联邦法令（气候变化法）为法律支撑。关键执行方：能源工业部、气候部、Mubadala、ADQ、ADIA、Masdar、TAQA、ADNOC、DEWA。">
+        UAE Energy Strategy 2050. Backed by Federal Decree-Law No. 11 of 2024 on Climate Change. Key actors: MoEI, MoCCAE, Mubadala, ADQ, ADIA, Masdar, TAQA, ADNOC, DEWA.
+      </p>
+      <div class="kpi">~32% → 38% → 100%</div>
+      <div class="kpi-label" data-en="Clean-energy share: 2030 / 2035 / 2050" data-zh="清洁能源占比：2030 / 2035 / 2050年">Clean-energy share: 2030 / 2035 / 2050</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ SOFTWARE OPPORTUNITIES ══ -->
+<div class="page-section" style="max-width:960px">
+  <div class="page-section-title"
+       data-en="Where Software Startups Are Winning — 5 Spaces"
+       data-zh="软件创业公司的制胜赛道 — 5 大空间">Where Software Startups Are Winning — 5 Spaces</div>
+  <div class="cards-5">
+
+    <div class="opp-card">
+      <div class="opp-num" data-en="Space 01" data-zh="赛道 01">Space 01</div>
+      <div class="icon">⚡</div>
+      <h3 data-en="Grid Intelligence &amp; Battery Dispatch" data-zh="电网智能与电池调度">Grid Intelligence &amp; Battery Dispatch</h3>
+      <p data-en="AI for storage trading, renewable forecasting, demand response." data-zh="AI赋能储能交易、可再生能源预测与需求响应。">AI for storage trading, renewable forecasting, demand response.</p>
+      <div class="examples">Rewbi · Octopus/Kraken · Stem</div>
+    </div>
+
+    <div class="opp-card">
+      <div class="opp-num" data-en="Space 02" data-zh="赛道 02">Space 02</div>
+      <div class="icon">🏢</div>
+      <h3 data-en="Building &amp; Industrial Energy Mgmt." data-zh="建筑与工业能源管理">Building &amp; Industrial Energy Mgmt.</h3>
+      <p data-en="HVAC waste reduction, industrial load monitoring, demand-side flexibility." data-zh="暖通空调节能、工业负载监测、需求侧灵活调控。">HVAC waste reduction, industrial load monitoring, demand-side flexibility.</p>
+      <div class="examples">BrainBox AI · Verdigris · 75F · Nectar</div>
+    </div>
+
+    <div class="opp-card">
+      <div class="opp-num" data-en="Space 03" data-zh="赛道 03">Space 03</div>
+      <div class="icon">📄</div>
+      <h3 data-en="Energy Regulatory &amp; Document Intelligence" data-zh="能源监管与文件智能">Energy Regulatory &amp; Document Intelligence</h3>
+      <p data-en="LLMs ingesting filings, permits, tariffs, ESG disclosures." data-zh="大语言模型处理监管申报文件、许可证、关税表及ESG披露文件。">LLMs ingesting filings, permits, tariffs, ESG disclosures.</p>
+      <div class="examples">Halcyon · Validere</div>
+    </div>
+
+    <div class="opp-card">
+      <div class="opp-num" data-en="Space 04" data-zh="赛道 04">Space 04</div>
+      <div class="icon">☀️</div>
+      <h3 data-en="Distributed Solar / Storage Ops." data-zh="分布式太阳能/储能运营">Distributed Solar / Storage Ops.</h3>
+      <p data-en="DER orchestration, virtual power plants, residential aggregation." data-zh="分布式能源调度、虚拟电厂、居民侧聚合管理。">DER orchestration, virtual power plants, residential aggregation.</p>
+      <div class="examples">Elastic Energy · EIPGRID · Tibo Energy</div>
+    </div>
+
+    <div class="opp-card">
+      <div class="opp-num" data-en="Space 05" data-zh="赛道 05">Space 05</div>
+      <div class="icon">🌍</div>
+      <h3 data-en="Carbon &amp; ESG Accounting" data-zh="碳排放与ESG核算">Carbon &amp; ESG Accounting</h3>
+      <p data-en="Emissions tracking now mandatory under EU CSRD, UAE/UK disclosure rules." data-zh="碳排放追踪现已成为EU CSRD、UAE/英国信息披露规则下的强制性要求。">Emissions tracking now mandatory under EU CSRD, UAE/UK disclosure rules.</p>
+      <div class="examples">Persefoni · Sweep · Watershed</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ DECISION FRAMING ══ -->
+<div class="page-section" style="max-width:960px">
+  <div class="page-section-title"
+       data-en="Decision Framing — Dubai-Based, LLM + CV + Full-Stack"
+       data-zh="决策框架 — 以迪拜为基地，LLM + CV + 全栈">Decision Framing — Dubai-Based, LLM + CV + Full-Stack</div>
+  <div class="decision-grid">
+
+    <div class="decision-card bad">
+      <h3 data-en="✕  Bad Fits" data-zh="✕  不适合的方向">✕  Bad Fits</h3>
+      <ul>
+        <li data-en="Upstream (capex + geophysics expertise required)"              data-zh="上游（需要大量资本支出与地球物理专业知识）">Upstream (capex + geophysics expertise required)</li>
+        <li data-en="Generation hardware (capex-heavy, commodity)"                  data-zh="发电硬件（资本密集，产品同质化）">Generation hardware (capex-heavy, commodity)</li>
+        <li data-en="Grid hardware (requires utility partnerships)"                  data-zh="电网硬件（需要与公用事业公司建立伙伴关系）">Grid hardware (requires utility partnerships)</li>
+        <li data-en="Anything competing head-on with Masdar / ADNOC in-house tech"  data-zh="任何与Masdar / ADNOC内部技术正面竞争的方向">Anything competing head-on with Masdar / ADNOC in-house tech</li>
+      </ul>
+    </div>
+
+    <div class="decision-card good">
+      <h3 data-en="✓  Good Fits" data-zh="✓  适合的方向">✓  Good Fits</h3>
+      <ul>
+        <li data-en="End-use software — commercial / industrial energy management"                                                            data-zh="终端使用软件——商业/工业能源管理">End-use software — commercial / industrial energy management</li>
+        <li data-en="Regulatory / compliance intelligence — UAE rule complexity (Islamic finance + Net Zero + sectoral mandates)"             data-zh="监管/合规智能——UAE规则复杂性（伊斯兰金融 + 净零 + 行业授权）">Regulatory / compliance intelligence — UAE rule complexity (Islamic finance + Net Zero + sectoral mandates)</li>
+        <li data-en="Distributed energy / solar ops — UAE rooftop solar + GCC-wide DER expansion needs vendor-neutral tools"                 data-zh="分布式能源/太阳能运营——UAE屋顶太阳能及GCC区域DER扩展需要中立供应商工具">Distributed energy / solar ops — UAE rooftop solar + GCC-wide DER expansion needs vendor-neutral tools</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ LEGEND ══ -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#2a4a8a;"></div><span data-en="Strategic Field" data-zh="战略场域">Strategic Field</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c97a20;"></div><span data-en="Value-Chain Layers (Upper)" data-zh="价值链层级（上层）">Value-Chain Layers (Upper)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2a8a6a;"></div><span data-en="Industry Pillars (Lower)" data-zh="行业支柱（下层）">Industry Pillars (Lower)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2a8a6a; opacity:0.5;"></div><span data-en="Emerging Pillar" data-zh="新兴支柱">Emerging Pillar</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#d4aa40;"></div><span data-en="UAE Lens" data-zh="UAE 视角">UAE Lens</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#5060a0;"></div><span data-en="Software Opportunities" data-zh="软件机会">Software Opportunities</span></div>
+</div>
+
+<script>
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-en]').forEach(el => { el.innerHTML = el.dataset[lang]; });
+  }
+
+  function toggleTheme() {
+    const cur  = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('voltai-theme', next);
+    updateThemeIcon(next);
+  }
+
+  function updateThemeIcon(theme) {
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    updateThemeIcon(document.documentElement.getAttribute('data-theme') || 'dark');
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      if (!localStorage.getItem('voltai-theme')) {
+        const t = e.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+        updateThemeIcon(t);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

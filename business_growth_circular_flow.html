@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Growth Circular Framework</title>
+<!-- Anti-FOUC: set theme before first paint -->
+<script>
+  (function(){
+    var s = localStorage.getItem('voltai-theme');
+    var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', s || (dark ? 'dark' : 'light'));
+  })();
+</script>
+<style>
+  /* ═══════════════════════════════
+     DARK TOKENS  (default)
+  ═══════════════════════════════ */
+  :root {
+    color-scheme: dark;
+    --bg-page:         #0f172a;
+    --bg-wrap:         transparent;
+    --h1-color:        #f1f5f9;
+    --sub-color:       #64748b;
+    /* controls */
+    --ctrl-bg:         #1e293b;
+    --ctrl-border:     #334155;
+    --ctrl-btn:        #4a5580;
+    --ctrl-active-bg:  #2563eb;
+    --ctrl-active:     #fff;
+    /* nodes */
+    --node-bg:         #0f1f38;
+    --node-border:     #2563eb;
+    --node-border-last:#d97706;
+    --node-shadow:     rgba(37,99,235,0.15);
+    --badge-bg:        rgba(37,99,235,0.22);
+    --badge-color:     #93c5fd;
+    --badge-bg-last:   rgba(217,119,6,0.22);
+    --badge-color-last:#fcd34d;
+    --node-title:      #e2e8f0;
+    --node-tag:        #fbbf24;
+    --node-detail:     #7da8c8;
+    /* center ring */
+    --center-bg:       #060e1c;
+    --center-border:   #1d4ed8;
+    --center-label:    #60a5fa;
+    /* SVG */
+    --arc-blue:        #3b82f6;
+    --arc-amber:       #f59e0b;
+    --orbit-ring:      #1e3a5f;
+    --orbit-opacity:   0.55;
+  }
+
+  /* ═══════════════════════════════
+     LIGHT TOKENS
+  ═══════════════════════════════ */
+  html[data-theme="light"] {
+    color-scheme: light;
+    --bg-page:         #f0f4ff;
+    --bg-wrap:         transparent;
+    --h1-color:        #0f1a2e;
+    --sub-color:       #5060a0;
+    --ctrl-bg:         #ffffff;
+    --ctrl-border:     #d0d8f0;
+    --ctrl-btn:        #8090b0;
+    --ctrl-active-bg:  #2563eb;
+    --ctrl-active:     #fff;
+    --node-bg:         #ffffff;
+    --node-border:     #4080e8;
+    --node-border-last:#c97a10;
+    --node-shadow:     rgba(37,99,235,0.10);
+    --badge-bg:        rgba(37,99,235,0.09);
+    --badge-color:     #1d4ed8;
+    --badge-bg-last:   rgba(217,119,6,0.12);
+    --badge-color-last:#92400e;
+    --node-title:      #0f1a2e;
+    --node-tag:        #b45309;
+    --node-detail:     #3050a0;
+    --center-bg:       #e8f0ff;
+    --center-border:   #3b82f6;
+    --center-label:    #1d4ed8;
+    --arc-blue:        #2563eb;
+    --arc-amber:       #d97706;
+    --orbit-ring:      #93b4dc;
+    --orbit-opacity:   0.45;
+  }
+
+  /* ═══════════════════════════════
+     BASE
+  ═══════════════════════════════ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-page);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    padding: 24px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 100;
+  }
+  .theme-btn {
+    width: 32px; height: 32px;
+    border-radius: 7px;
+    border: 1px solid var(--ctrl-border);
+    background: var(--ctrl-bg);
+    cursor: pointer;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .lang-toggle {
+    display: flex;
+    background: var(--ctrl-bg);
+    border: 1px solid var(--ctrl-border);
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .lang-toggle button {
+    padding: 6px 13px;
+    font-size: 12px; font-weight: 600;
+    border: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    background: transparent;
+    color: var(--ctrl-btn);
+    letter-spacing: 0.04em;
+  }
+  .lang-toggle button.active { background: var(--ctrl-active-bg); color: var(--ctrl-active); }
+
+  /* ── PAGE HEADER ── */
+  h1 {
+    color: var(--h1-color);
+    font-size: 17px; font-weight: 700;
+    text-align: center; margin-bottom: 4px; letter-spacing: 0.2px;
+  }
+  .sub { color: var(--sub-color); font-size: 12px; text-align: center; margin-bottom: 20px; }
+
+  /* ── DIAGRAM WRAP ── */
+  #wrap { position: relative; width: 900px; height: 900px; flex-shrink: 0; }
+
+  /* ── NODE CARDS ── */
+  .node {
+    position: absolute;
+    width: 148px;
+    transform: translate(-50%, -50%);
+    background: var(--node-bg);
+    border: 1.5px solid var(--node-border);
+    border-radius: 9px;
+    padding: 9px 10px;
+    text-align: center;
+    z-index: 2;
+    box-shadow: 0 2px 14px var(--node-shadow);
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .node:hover {
+    transform: translate(-50%, -50%) scale(1.04);
+    box-shadow: 0 4px 22px var(--node-shadow);
+  }
+  .node.last { border-color: var(--node-border-last); }
+
+  .step-badge {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-color);
+    font-size: 8.5px; font-weight: 700;
+    letter-spacing: 0.7px;
+    padding: 1px 7px;
+    border-radius: 8px; margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .node.last .step-badge { background: var(--badge-bg-last); color: var(--badge-color-last); }
+
+  .node-title { color: var(--node-title); font-size: 11px; font-weight: 700; line-height: 1.4; margin-bottom: 5px; }
+  .node-tag   { color: var(--node-tag);   font-size: 8.5px; font-weight: 700; margin-bottom: 3px; }
+  .node-detail{ color: var(--node-detail); font-size: 8px; line-height: 1.4; }
+
+  /* ── CENTER RING ── */
+  .center-ring {
+    position: absolute;
+    left: 450px; top: 450px;
+    transform: translate(-50%, -50%);
+    width: 126px; height: 126px;
+    border-radius: 50%;
+    background: var(--center-bg);
+    border: 2px solid var(--center-border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 3;
+    box-shadow: 0 0 28px rgba(37,99,235,0.18);
+  }
+  .center-icon  { font-size: 26px; line-height: 1; }
+  .center-label { color: var(--center-label); font-size: 9.5px; font-weight: 700; text-align: center; margin-top: 5px; line-height: 1.35; }
+
+  /* ── SVG color classes ── */
+  .arc-main   { stroke: var(--arc-blue);  fill: none; stroke-width: 2; opacity: 0.72; }
+  .arc-last   { stroke: var(--arc-amber); fill: none; stroke-width: 2; opacity: 0.90; }
+  .tick-main  { fill: var(--arc-blue);  font-size: 9px; opacity: 0.65; }
+  .tick-last  { fill: var(--arc-amber); font-size: 9px; opacity: 0.65; }
+  #m-blue  polygon { fill: var(--arc-blue); }
+  #m-amber polygon { fill: var(--arc-amber); }
+  .orbit-ring { fill: none; stroke: var(--orbit-ring); stroke-width: 1; stroke-dasharray: 3 8; }
+</style>
+</head>
+<body>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Switch theme">🌙</button>
+  <div class="lang-toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<h1 id="page-title" data-en="Precise Target Audience — Business Growth Cycle"
+    data-zh="精准目标客群 — 业务增长循环">Precise Target Audience — Business Growth Cycle</h1>
+<p class="sub" id="page-sub"
+   data-en="A continuous circular framework driven by data and iteration"
+   data-zh="数据驱动、持续迭代的闭环增长框架">A continuous circular framework driven by data and iteration</p>
+
+<div id="wrap">
+  <svg id="svg" style="position:absolute;top:0;left:0;width:900px;height:900px;overflow:visible;pointer-events:none;z-index:1;"></svg>
+  <div class="center-ring">
+    <div class="center-icon">🔄</div>
+    <div class="center-label" id="center-label"
+         data-en="Continuous<br>Iteration"
+         data-zh="持续<br>迭代">Continuous<br>Iteration</div>
+  </div>
+</div>
+
+<script>
+/* ─── Bilingual node data ─── */
+const nodes = [
+  {
+    en: { step:"Step 1", title:"Precise Target\nAudience",           tag:null,              detail:"Starting point of every growth cycle" },
+    zh: { step:"第 1 步", title:"精准目标\n客群",                      tag:null,              detail:"每个增长周期的起点" }
+  },
+  {
+    en: { step:"Step 2", title:"Tap into Real\nMarket Demands",       tag:"Positioning",     detail:"Lock in crowds, strike core pain points directly" },
+    zh: { step:"第 2 步", title:"挖掘真实\n市场需求",                   tag:"定位",            detail:"锁定人群，直击核心痛点" }
+  },
+  {
+    en: { step:"Step 3", title:"Anchor Demands to\nSegmented Tracks", tag:"Verification",    detail:"Screen pain point intensity, eliminate alternatives" },
+    zh: { step:"第 3 步", title:"将需求锚定\n细分赛道",                  tag:"验证",            detail:"筛查痛点强度，排除替代方案" }
+  },
+  {
+    en: { step:"Step 4", title:"Establish Core\nBusiness via Tracks", tag:"Implementation",  detail:"Define exclusive value for targeted crowds" },
+    zh: { step:"第 4 步", title:"依托赛道建立\n核心业务",                tag:"落地",            detail:"为目标人群定义独特价值" }
+  },
+  {
+    en: { step:"Step 5", title:"Build Minimalist\nProducts",          tag:"Trial & Error",   detail:"Low-cost MVP + targeted internal testing" },
+    zh: { step:"第 5 步", title:"打造极简\n产品",                       tag:"试错",            detail:"低成本 MVP + 定向内部测试" }
+  },
+  {
+    en: { step:"Step 6", title:"Build Multi-Dim.\nUser Trust",        tag:"Trust Building",  detail:"Professional + Emotional + Authoritative" },
+    zh: { step:"第 6 步", title:"构建多维\n用户信任",                   tag:"信任建设",         detail:"专业 + 情感 + 权威" }
+  },
+  {
+    en: { step:"Step 7", title:"Realize Commercial\nMonetization",    tag:"Closed Loop",     detail:"User payment, achieve revenue circulation" },
+    zh: { step:"第 7 步", title:"实现商业\n变现",                       tag:"闭环",            detail:"用户付款，实现营收循环" }
+  },
+  {
+    en: { step:"Step 8", title:"Data Review &\nIterative Decisions",  tag:"Decision Making", detail:"Data-driven scaling, transform or exit" },
+    zh: { step:"第 8 步", title:"数据复盘与\n迭代决策",                  tag:"决策优化",         detail:"数据驱动规模化，转型或退出" }
+  },
+];
+
+/* ─── Layout constants ─── */
+const CX = 450, CY = 450, R = 335, GAP = 13;
+const r2d = a => a * Math.PI / 180;
+const norm = a => ((a % 360) + 360) % 360;
+const angles    = nodes.map((_, i) => -90 + i * 45);
+const positions = angles.map(a => ({ x: CX + R * Math.cos(r2d(a)), y: CY + R * Math.sin(r2d(a)) }));
+
+let currentLang = 'en';
+
+/* ─── Render SVG (arrows + orbit ring) ─── */
+function renderSVG() {
+  const svg = document.getElementById('svg');
+  svg.innerHTML = `<defs>
+    <marker id="m-blue"  markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 9 3.5, 0 7"/>
+    </marker>
+    <marker id="m-amber" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <polygon points="0 0, 9 3.5, 0 7"/>
+    </marker>
+  </defs>
+  <circle class="orbit-ring" cx="${CX}" cy="${CY}" r="${R}" opacity="var(--orbit-opacity)"/>`;
+
+  for (let i = 0; i < 8; i++) {
+    const next = (i + 1) % 8;
+    const isLast = i === 7;
+    const sd = norm(angles[i] + GAP);
+    const ed = norm(angles[next] - GAP);
+    let span = ed - sd; if (span < 0) span += 360;
+    const laf = span > 180 ? 1 : 0;
+    const sx = (CX + R * Math.cos(r2d(sd))).toFixed(1);
+    const sy = (CY + R * Math.sin(r2d(sd))).toFixed(1);
+    const ex = (CX + R * Math.cos(r2d(ed))).toFixed(1);
+    const ey = (CY + R * Math.sin(r2d(ed))).toFixed(1);
+
+    const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    p.setAttribute("class", isLast ? "arc-last" : "arc-main");
+    p.setAttribute("d", `M ${sx} ${sy} A ${R} ${R} 0 ${laf} 1 ${ex} ${ey}`);
+    p.setAttribute("marker-end", isLast ? "url(#m-amber)" : "url(#m-blue)");
+    svg.appendChild(p);
+
+    // Direction tick at arc midpoint
+    const md = norm(sd + span / 2);
+    const lx = CX + (R + 22) * Math.cos(r2d(md));
+    const ly = CY + (R + 22) * Math.sin(r2d(md));
+    const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    t.setAttribute("class", isLast ? "tick-last" : "tick-main");
+    t.setAttribute("x", lx.toFixed(1));
+    t.setAttribute("y", ly.toFixed(1));
+    t.setAttribute("text-anchor", "middle");
+    t.setAttribute("dominant-baseline", "central");
+    t.textContent = "▶";
+    svg.appendChild(t);
+  }
+}
+
+/* ─── Render node boxes ─── */
+function renderNodes() {
+  // Remove old nodes (keep svg and center-ring)
+  document.querySelectorAll('#wrap .node').forEach(el => el.remove());
+  const wrap = document.getElementById('wrap');
+
+  nodes.forEach((node, i) => {
+    const d   = node[currentLang];
+    const pos = positions[i];
+    const el  = document.createElement('div');
+    el.className = 'node' + (i === 7 ? ' last' : '');
+    el.style.left = pos.x + 'px';
+    el.style.top  = pos.y + 'px';
+
+    const lines = d.title.split('\n');
+    let html = `<div class="step-badge">${d.step}</div>`;
+    html += `<div class="node-title">${lines.join('<br>')}</div>`;
+    if (d.tag) {
+      html += `<div class="node-tag">【${d.tag}】</div>`;
+      html += `<div class="node-detail">${d.detail}</div>`;
+    }
+    el.innerHTML = html;
+    wrap.appendChild(el);
+  });
+}
+
+/* ─── Language switch ─── */
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+  // Static elements with data-en / data-zh
+  document.querySelectorAll('[data-en]').forEach(el => { el.innerHTML = el.dataset[lang]; });
+
+  renderNodes();
+}
+
+/* ─── Theme toggle ─── */
+function toggleTheme() {
+  const cur  = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('voltai-theme', next);
+  updateThemeIcon(next);
+}
+
+function updateThemeIcon(theme) {
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+/* ─── Init ─── */
+renderSVG();
+renderNodes();
+
+document.addEventListener('DOMContentLoaded', function () {
+  updateThemeIcon(document.documentElement.getAttribute('data-theme') || 'dark');
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+    if (!localStorage.getItem('voltai-theme')) {
+      const t = e.matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      updateThemeIcon(t);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
