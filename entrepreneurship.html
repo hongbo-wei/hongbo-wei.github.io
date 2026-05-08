@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Entrepreneurship — Hongbo Wei</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Entrepreneurship insights — industry maps and business frameworks by Hongbo Wei.">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0c0c0c;
+      color: #fff;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .ep-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 70px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .ep-header__logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .ep-header__logo img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .ep-header__logo p {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .ep-header__back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #888;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .ep-header__back:hover { color: #0f33ff; }
+
+    .ep-header__back svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      transition: transform 0.2s;
+    }
+
+    .ep-header__back:hover svg { transform: translateX(-3px); }
+
+    /* ── Hero ── */
+    .ep-hero {
+      padding: 72px 48px 56px;
+      max-width: 900px;
+    }
+
+    .ep-hero__label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #0f33ff;
+      margin-bottom: 20px;
+    }
+
+    .ep-hero h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .ep-hero__sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: #888;
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    /* ── Cards ── */
+    .ep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding: 0 48px 80px;
+    }
+
+    .ep-card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+
+    .ep-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
+      border-color: #333;
+    }
+
+    .ep-card__bar {
+      height: 4px;
+      width: 100%;
+    }
+
+    .ep-card__body {
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .ep-card__tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .ep-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .ep-card p {
+      font-size: 14px;
+      font-weight: 300;
+      color: #888;
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 28px;
+    }
+
+    .ep-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+      padding: 12px 20px;
+      border: 1px solid #333;
+      border-radius: 2px;
+      align-self: flex-start;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .ep-card__link svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+      transition: transform 0.2s;
+    }
+
+    .ep-card__link:hover svg { transform: translateX(3px); }
+
+    /* per-card accent colours on hover */
+    .ep-card--ai    .ep-card__link:hover { background: #3b6fd4; border-color: #3b6fd4; }
+    .ep-card--energy .ep-card__link:hover { background: #c97a20; border-color: #c97a20; }
+    .ep-card--biz   .ep-card__link:hover { background: #2563eb; border-color: #2563eb; }
+
+    /* ── Footer ── */
+    .ep-footer {
+      border-top: 1px solid #1a1a1a;
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ep-footer p {
+      font-size: 12px;
+      color: #444;
+      font-weight: 400;
+    }
+
+    .ep-footer a {
+      color: #444;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .ep-footer a:hover { color: #0f33ff; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .ep-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .ep-header, .ep-hero, .ep-grid, .ep-footer { padding-left: 24px; padding-right: 24px; }
+      .ep-grid { grid-template-columns: 1fr; }
+      .ep-hero { padding-top: 48px; padding-bottom: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="ep-header">
+    <a class="ep-header__logo" href="index.html">
+      <img src="assets/img/logo.png" alt="Hongbo Wei">
+      <p>Hongbo Wei</p>
+    </a>
+    <a class="ep-header__back" href="index.html">
+      <svg viewBox="0 0 150 118" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(0,118) scale(0.1,-0.1)">
+          <path d="M561,1169C525,1155,10,640,3,612c-3-13,1-36,8-52c8-15,134-145,281-289C527,41,562,10,590,10c22,0,41,9,61,29c55,55,49,64-163,278L296,510h575c564,0,576,0,597,20c46,43,37,109-18,137c-19,10-159,13-590,13l-565,1l182,180c101,99,187,188,193,199c16,30,12,57-12,84C631,1174,595,1183,561,1169z"/>
+        </g>
+      </svg>
+      Portfolio
+    </a>
+  </header>
+
+  <section class="ep-hero">
+    <span class="ep-hero__label">Hongbo Wei</span>
+    <h1>Entrepreneurship</h1>
+    <p class="ep-hero__sub">Interactive industry maps and strategic frameworks exploring AI, energy, and business growth — built to surface the patterns behind markets.</p>
+  </section>
+
+  <main class="ep-grid">
+
+    <!-- Card 1: AI Industry -->
+    <article class="ep-card ep-card--ai">
+      <div class="ep-card__bar" style="background: #3b6fd4;"></div>
+      <div class="ep-card__body">
+        <span class="ep-card__tag" style="color: #3b6fd4;">AI · Technology</span>
+        <h2>AI Industry Overview</h2>
+        <p>Interactive map of the global AI landscape — from foundational models and infrastructure to applications and key players shaping the ecosystem.</p>
+        <a class="ep-card__link" href="ai-industry-chart.html">
+          Explore
+          <svg viewBox="0 0 150 118" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(0,118) scale(0.1,-0.1)">
+              <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- Card 2: Energy Industry -->
+    <article class="ep-card ep-card--energy">
+      <div class="ep-card__bar" style="background: #c97a20;"></div>
+      <div class="ep-card__body">
+        <span class="ep-card__tag" style="color: #c97a20;">Energy · UAE/GCC</span>
+        <h2>Energy Industry Overview — UAE/GCC 2026</h2>
+        <p>Strategic view of the UAE and GCC energy sector covering oil, gas, renewables, and the geopolitical forces reshaping regional energy in 2026.</p>
+        <a class="ep-card__link" href="energy-industry-chart.html">
+          Explore
+          <svg viewBox="0 0 150 118" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(0,118) scale(0.1,-0.1)">
+              <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- Card 3: Business Growth -->
+    <article class="ep-card ep-card--biz">
+      <div class="ep-card__bar" style="background: #2563eb;"></div>
+      <div class="ep-card__body">
+        <span class="ep-card__tag" style="color: #2563eb;">Business · Strategy</span>
+        <h2>Business Growth Circular Framework</h2>
+        <p>Circular flow model illustrating the interconnected drivers of sustainable business growth — from capital cycles to market feedback loops.</p>
+        <a class="ep-card__link" href="business_growth_circular_flow.html">
+          Explore
+          <svg viewBox="0 0 150 118" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(0,118) scale(0.1,-0.1)">
+              <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="ep-footer">
+    <p>© Hongbo Wei</p>
+    <a href="index.html">← Back to Portfolio</a>
+  </footer>
+
+</body>
+</html>
