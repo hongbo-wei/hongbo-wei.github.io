@@ -128,9 +128,24 @@
       border-color: #333;
     }
 
-    .ep-card__bar {
-      height: 4px;
+    .ep-card__thumb {
       width: 100%;
+      height: 200px;
+      overflow: hidden;
+      display: block;
+    }
+
+    .ep-card__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .ep-card:hover .ep-card__thumb img {
+      transform: scale(1.04);
     }
 
     .ep-card__body {
@@ -262,7 +277,9 @@
 
     <!-- Card 1: AI Industry -->
     <article class="ep-card ep-card--ai">
-      <div class="ep-card__bar" style="background: #3b6fd4;"></div>
+      <div class="ep-card__thumb">
+        <img src="assets/img/map/AI-industry-overview.png" alt="AI Industry Overview map">
+      </div>
       <div class="ep-card__body">
         <span class="ep-card__tag" style="color: #3b6fd4;">AI · Technology</span>
         <h2>AI Industry Overview</h2>
@@ -280,7 +297,9 @@
 
     <!-- Card 2: Energy Industry -->
     <article class="ep-card ep-card--energy">
-      <div class="ep-card__bar" style="background: #c97a20;"></div>
+      <div class="ep-card__thumb">
+        <img src="assets/img/map/energy-industry-overview.png" alt="Energy Industry Overview map">
+      </div>
       <div class="ep-card__body">
         <span class="ep-card__tag" style="color: #c97a20;">Energy · UAE/GCC</span>
         <h2>Energy Industry Overview — UAE/GCC 2026</h2>
@@ -298,7 +317,9 @@
 
     <!-- Card 3: Business Growth -->
     <article class="ep-card ep-card--biz">
-      <div class="ep-card__bar" style="background: #2563eb;"></div>
+      <div class="ep-card__thumb">
+        <img src="assets/img/map/entrepreneurship-logic.png" alt="Business Growth Circular Framework map">
+      </div>
       <div class="ep-card__body">
         <span class="ep-card__tag" style="color: #2563eb;">Business · Strategy</span>
         <h2>Business Growth Circular Framework</h2>
